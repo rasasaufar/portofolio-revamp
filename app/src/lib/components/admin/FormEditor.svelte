@@ -3,11 +3,13 @@
 	import { onMount } from 'svelte';
 	import { getResource, createResource, updateResource } from '$lib/api/***REMOVED***';
 	import ImageUpload from '$lib/components/***REMOVED***/ImageUpload.svelte';
+	import TagListEditor from '$lib/components/***REMOVED***/TagListEditor.svelte';
+	import GalleryEditor from '$lib/components/***REMOVED***/GalleryEditor.svelte';
 
 	interface FieldDef {
 		key: string;
 		label: string;
-		type?: 'text' | 'textarea' | 'json' | 'boolean' | 'select' | 'number' | 'image';
+		type?: 'text' | 'textarea' | 'json' | 'tags' | 'gallery' | 'boolean' | 'select' | 'number' | 'image';
 		required?: boolean;
 		options?: string[];
 		placeholder?: string;
@@ -44,14 +46,12 @@
 			}
 			loading = false;
 		} else {
-			// Set defaults
 			for (const field of fields) {
 				if (field.type === 'boolean') formData[field.key] = false;
-				else if (field.type === 'json') formData[field.key] = [];
+				else if (field.type === 'json' || field.type === 'tags' || field.type === 'gallery') formData[field.key] = [];
 				else if (field.type === 'number') formData[field.key] = 0;
 				else formData[field.key] = '';
 			}
-			// Default is_published to true for new records
 			if ('is_published' in formData || fields.some(f => f.key === 'is_published')) {
 				formData['is_published'] = true;
 			}
@@ -64,7 +64,6 @@
 		error = '';
 
 		try {
-			// Clean up data before sending
 			const payload: Record<string, unknown> = {};
 			for (const field of fields) {
 				let val = formData[field.key];
@@ -94,6 +93,22 @@
 		if (val === null || val === undefined) return '[]';
 		return JSON.stringify(val, null, 2);
 	}
+
+	function getArrayValue(val: unknown): string[] {
+		if (Array.isArray(val)) return val as string[];
+		if (typeof val === 'string') {
+			try { return JSON.parse(val); } catch { return []; }
+		}
+		return [];
+	}
+
+	function getGalleryValue(val: unknown): { image: string; caption: string; description: string }[] {
+		if (Array.isArray(val)) return val as { image: string; caption: string; description: string }[];
+		if (typeof val === 'string') {
+			try { return JSON.parse(val); } catch { return []; }
+		}
+		return [];
+	}
 </script>
 
 <div class="***REMOVED***-header">
@@ -122,6 +137,17 @@
 							required={field.required}
 							placeholder={field.placeholder}
 						></textarea>
+					{:else if field.type === 'tags'}
+						<TagListEditor
+							value={getArrayValue(formData[field.key])}
+							onchange={(items) => { formData[field.key] = items; }}
+							placeholder={field.placeholder || 'Add item...'}
+						/>
+					{:else if field.type === 'gallery'}
+						<GalleryEditor
+							value={getGalleryValue(formData[field.key])}
+							onchange={(items) => { formData[field.key] = items; }}
+						/>
 					{:else if field.type === 'json'}
 						<textarea
 							id={field.key}

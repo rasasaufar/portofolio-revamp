@@ -11,7 +11,7 @@
 	{ key: 'status', label: 'Status', type: 'select', options: ['Published', 'In Review', 'Draft'] },
 	{ key: 'authors', label: 'Authors', required: true },
 	{ key: 'description', label: 'Description', type: 'textarea' },
-	{ key: 'tags', label: 'Tags (JSON)', type: 'json' },
+	{ key: 'tags', label: 'Tags', type: 'tags', placeholder: 'Add tag...' },
 	{ key: 'publication_url', label: 'Publication URL' },
 	{ key: 'order_number', label: 'Order', type: 'number' },
 	{ key: 'is_published', label: 'Published', type: 'boolean' }

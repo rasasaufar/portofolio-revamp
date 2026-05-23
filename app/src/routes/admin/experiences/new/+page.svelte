@@ -9,10 +9,10 @@
 	{ key: 'end_date', label: 'End Date' },
 	{ key: 'is_current', label: 'Currently Working Here', type: 'boolean' },
 	{ key: 'description', label: 'Description', type: 'textarea' },
-	{ key: 'bullet_points', label: 'Bullet Points (JSON)', type: 'json' },
-	{ key: 'tech_tags', label: 'Tech Tags (JSON)', type: 'json' },
+	{ key: 'bullet_points', label: 'Responsibilities', type: 'tags', placeholder: 'Add responsibility...' },
+	{ key: 'tech_tags', label: 'Tech Stack', type: 'tags', placeholder: 'Add tech...' },
 	{ key: 'logo_url', label: 'Company Logo', type: 'image' },
-	{ key: 'gallery_images', label: 'Gallery Images (JSON)', type: 'json' },
+	{ key: 'gallery_images', label: 'Gallery Images', type: 'gallery' },
 	{ key: 'order_number', label: 'Order', type: 'number' },
 	{ key: 'is_published', label: 'Published', type: 'boolean' }
 ]} />

@@ -8,7 +8,7 @@
 	{ key: 'headline', label: 'Headline', type: 'textarea', required: true },
 	{ key: 'description', label: 'Description', type: 'textarea', required: true },
 	{ key: 'avatar_url', label: 'Avatar', type: 'image' },
-	{ key: 'current_focus', label: 'Skill Stack (JSON array)', type: 'json' },
+	{ key: 'current_focus', label: 'Skill Stack', type: 'tags', placeholder: 'Add skill...' },
 	{ key: 'availability_text', label: 'Availability Text' },
 	{ key: 'cta_primary_label', label: 'CTA Primary Label' },
 	{ key: 'cta_primary_link', label: 'CTA Primary Link' },

@@ -12,7 +12,7 @@
 	{ key: 'credential_id', label: 'Credential ID' },
 	{ key: 'credential_url', label: 'Credential URL' },
 	{ key: 'description', label: 'Description', type: 'textarea' },
-	{ key: 'skills', label: 'Skills (JSON)', type: 'json' },
+	{ key: 'skills', label: 'Skills', type: 'tags', placeholder: 'Add skill...' },
 	{ key: 'image_url', label: 'Certificate Image', type: 'image' },
 	{ key: 'category', label: 'Category', type: 'select', options: ['core', 'additional'] },
 	{ key: 'status', label: 'Status', type: 'select', options: ['active', 'expired', 'revoked'] },

@@ -7,7 +7,7 @@
 <FormEditor resource="strengths" {id} title="Implementation Strengths" backHref="/***REMOVED***/strengths" fields={[
 	{ key: 'title', label: 'Title', required: true },
 	{ key: 'description', label: 'Description', type: 'textarea' },
-	{ key: 'bullet_points', label: 'Bullet Points (JSON)', type: 'json' },
+	{ key: 'bullet_points', label: 'Bullet Points', type: 'tags', placeholder: 'Add point...' },
 	{ key: 'icon_url', label: 'Icon', type: 'image' },
 	{ key: 'order_number', label: 'Order', type: 'number' },
 	{ key: 'is_published', label: 'Published', type: 'boolean' }

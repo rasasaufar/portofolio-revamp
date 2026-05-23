@@ -8,7 +8,7 @@
 	{ key: 'title', label: 'Title', required: true },
 	{ key: 'category', label: 'Category', type: 'select', options: ['Infrastructure', 'UI/UX'], required: true },
 	{ key: 'description', label: 'Description', type: 'textarea' },
-	{ key: 'tech_tags', label: 'Tech Tags (JSON)', type: 'json' },
+	{ key: 'tech_tags', label: 'Tech Stack', type: 'tags', placeholder: 'Add tech...' },
 	{ key: 'image_url', label: 'Project Image', type: 'image' },
 	{ key: 'demo_url', label: 'Demo URL' },
 	{ key: 'repo_url', label: 'Repo URL' },

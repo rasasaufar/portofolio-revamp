@@ -11,7 +11,7 @@
 	{ key: 'gpa', label: 'GPA' },
 	{ key: 'description', label: 'Description', type: 'textarea' },
 	{ key: 'image_url', label: 'Image', type: 'image' },
-	{ key: 'tags', label: 'Tags (JSON)', type: 'json' },
+	{ key: 'tags', label: 'Tags', type: 'tags', placeholder: 'Add tag...' },
 	{ key: 'order_number', label: 'Order', type: 'number' },
 	{ key: 'is_published', label: 'Published', type: 'boolean' }
 ]} />
