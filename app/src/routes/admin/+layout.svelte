@@ -3,9 +3,11 @@
 	import { goto } from '$app/navigation';
 	import { onMount } from 'svelte';
 	import { isAuthenticated, clearToken } from '$lib/stores/auth';
+	import { getDashboardStats } from '$lib/api/***REMOVED***';
 	import '$lib/styles/***REMOVED***.css';
 
 	let { children } = $props();
+	let unreadCount = $state(0);
 
 	const navItems = [
 		{ href: '/***REMOVED***/dashboard', label: 'Dashboard', icon: '📊' },
@@ -29,8 +31,23 @@
 	onMount(() => {
 		if (!$isAuthenticated && !isLoginPage) {
 			goto('/***REMOVED***/login');
+			return;
+		}
+
+		if ($isAuthenticated && !isLoginPage) {
+			loadUnreadCount();
+			// Poll every 30 seconds
+			const interval = setInterval(loadUnreadCount, 30000);
+			return () => clearInterval(interval);
 		}
 	});
+
+	async function loadUnreadCount() {
+		try {
+			const stats = await getDashboardStats();
+			unreadCount = stats.unread_messages || 0;
+		} catch { /* ignore */ }
+	}
 
 	function handleLogout() {
 		clearToken();
@@ -53,6 +70,9 @@
 						<a href={item.href} class:active={currentPath.startsWith(item.href)}>
 							<span>{item.icon}</span>
 							<span>{item.label}</span>
+							{#if item.href === '/***REMOVED***/messages' && unreadCount > 0}
+								<span class="***REMOVED***-nav-badge">{unreadCount}</span>
+							{/if}
 						</a>
 					</li>
 				{/each}
