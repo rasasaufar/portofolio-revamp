@@ -1,0 +1,31 @@
+# OS
+.DS_Store
+Thumbs.db
+
+# Environment
+.env
+.env.*
+!.env.example
+!.env.test
+
+# === Frontend (app/) ===
+app/node_modules
+app/.output
+app/.vercel
+app/.netlify
+app/.wrangler
+app/.svelte-kit
+app/build
+app/vite.config.js.timestamp-*
+app/vite.config.ts.timestamp-*
+
+# === Backend (api/) ===
+api/bin/
+api/tmp/
+api/*.exe
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
