@@ -50,7 +50,7 @@
 	{#each items as item, index}
 		<div class="gallery-card">
 			<div class="gallery-card-header">
-				<span class="gallery-card-num">#{index + 1}</span>
+				<span class="gallery-card-num">Item #{index + 1}</span>
 				<button type="button" class="gallery-remove" onclick={() => removeItem(index)} title="Remove">✕</button>
 			</div>
 
@@ -97,9 +97,9 @@
 	}
 
 	.gallery-card {
-		background: var(--***REMOVED***-bg);
-		border: 1px solid var(--***REMOVED***-border);
-		border-radius: var(--***REMOVED***-radius);
+		background: var(--***REMOVED***-soft);
+		border: 3px solid var(--***REMOVED***-ink);
+		box-shadow: 3px 3px 0 0 var(--***REMOVED***-ink);
 		padding: 1rem;
 	}
 
@@ -108,32 +108,36 @@
 		justify-content: space-between;
 		align-items: center;
 		margin-bottom: 0.75rem;
+		padding-bottom: 0.5rem;
+		border-bottom: 2px solid var(--***REMOVED***-ink);
 	}
 
 	.gallery-card-num {
-		font-size: 0.75rem;
-		color: var(--***REMOVED***-text-muted);
-		font-family: var(--***REMOVED***-mono);
+		font-family: var(--font-mono);
+		font-size: 0.68rem;
+		text-transform: uppercase;
+		letter-spacing: 0.5px;
+		color: var(--***REMOVED***-ink-muted);
 	}
 
 	.gallery-remove {
-		background: none;
-		border: 1px solid var(--***REMOVED***-border);
-		color: var(--***REMOVED***-text-muted);
+		background: var(--***REMOVED***-pink);
+		border: 2px solid var(--***REMOVED***-ink);
+		box-shadow: 2px 2px 0 0 var(--***REMOVED***-ink);
 		width: 26px;
 		height: 26px;
-		border-radius: 4px;
 		cursor: pointer;
 		font-size: 0.75rem;
+		font-weight: 700;
 		display: flex;
 		align-items: center;
 		justify-content: center;
+		transition: transform 0.1s ease;
 	}
 
 	.gallery-remove:hover {
-		background: var(--***REMOVED***-danger);
-		border-color: var(--***REMOVED***-danger);
-		color: white;
+		transform: translate(-1px, -1px);
+		box-shadow: 3px 3px 0 0 var(--***REMOVED***-ink);
 	}
 
 	.gallery-field {
@@ -142,10 +146,12 @@
 
 	.gallery-label {
 		display: block;
-		font-size: 0.7rem;
+		font-family: var(--font-mono);
+		font-size: 0.65rem;
 		text-transform: uppercase;
-		color: var(--***REMOVED***-text-muted);
+		letter-spacing: 0.8px;
+		color: var(--***REMOVED***-ink-muted);
 		margin-bottom: 0.3rem;
-		font-weight: 600;
+		font-weight: 700;
 	}
 </style>

@@ -74,6 +74,7 @@
 		<ul class="tag-list">
 			{#each items as item, index}
 				<li class="tag-item">
+					<span class="tag-index">#{index + 1}</span>
 					<span class="tag-text">{item}</span>
 					<div class="tag-actions">
 						<button type="button" class="tag-btn" onclick={() => moveUp(index)} disabled={index === 0} title="Move up">↑</button>
@@ -115,16 +116,28 @@
 		display: flex;
 		align-items: center;
 		gap: 0.5rem;
-		background: var(--***REMOVED***-bg);
-		border: 1px solid var(--***REMOVED***-border);
-		border-radius: var(--***REMOVED***-radius);
-		padding: 0.5rem 0.75rem;
+		background: var(--***REMOVED***-soft);
+		border: 3px solid var(--***REMOVED***-ink);
+		box-shadow: 2px 2px 0 0 var(--***REMOVED***-ink);
+		padding: 0.45rem 0.7rem;
+		transition: transform 0.1s ease;
+	}
+
+	.tag-item:hover {
+		transform: translate(-1px, -1px);
+		box-shadow: 3px 3px 0 0 var(--***REMOVED***-ink);
+	}
+
+	.tag-index {
+		font-family: var(--font-mono);
+		font-size: 0.62rem;
+		color: var(--***REMOVED***-ink-muted);
+		min-width: 1.5rem;
 	}
 
 	.tag-text {
 		flex: 1;
 		font-size: 0.85rem;
-		color: var(--***REMOVED***-text);
 		word-break: break-word;
 	}
 
@@ -135,23 +148,24 @@
 	}
 
 	.tag-btn {
-		background: none;
-		border: 1px solid var(--***REMOVED***-border);
-		color: var(--***REMOVED***-text-muted);
+		background: var(--***REMOVED***-white);
+		border: 2px solid var(--***REMOVED***-ink);
+		color: var(--***REMOVED***-ink);
 		width: 24px;
 		height: 24px;
-		border-radius: 4px;
 		cursor: pointer;
 		font-size: 0.7rem;
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		transition: all 0.15s;
+		transition: all 0.1s ease;
+		box-shadow: 1px 1px 0 0 var(--***REMOVED***-ink);
 	}
 
 	.tag-btn:hover:not(:disabled) {
-		background: var(--***REMOVED***-surface-2);
-		color: var(--***REMOVED***-text);
+		background: var(--***REMOVED***-yellow);
+		transform: translate(-1px, -1px);
+		box-shadow: 2px 2px 0 0 var(--***REMOVED***-ink);
 	}
 
 	.tag-btn:disabled {
@@ -160,9 +174,7 @@
 	}
 
 	.tag-btn-remove:hover:not(:disabled) {
-		background: var(--***REMOVED***-danger);
-		border-color: var(--***REMOVED***-danger);
-		color: white;
+		background: var(--***REMOVED***-pink);
 	}
 
 	.tag-input-row {

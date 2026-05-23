@@ -84,10 +84,15 @@
 </div>
 
 {#if loading}
-	<p style="color: var(--***REMOVED***-text-muted);">Loading...</p>
+	<div class="crud-loading">
+		<div class="loading-box"></div>
+		<span>Loading records...</span>
+	</div>
 {:else if items.length === 0}
-	<div class="***REMOVED***-card">
-		<p style="color: var(--***REMOVED***-text-muted); text-align: center; padding: 2rem;">No records found. Click "Add New" to create one.</p>
+	<div class="***REMOVED***-card empty-state">
+		<div class="empty-icon" aria-hidden="true">◇</div>
+		<p class="empty-text">No records found</p>
+		<p class="empty-hint">Click "Add New" to create your first entry.</p>
 	</div>
 {:else}
 	<div class="***REMOVED***-card ***REMOVED***-table-wrap">
@@ -102,8 +107,8 @@
 				</tr>
 			</thead>
 			<tbody>
-				{#each items as item}
-					<tr>
+				{#each items as item, index}
+					<tr style="--row-i:{index}">
 						{#each tableFields.slice(0, 4) as field}
 							<td>{displayValue(item, field.key)}</td>
 						{/each}
@@ -134,8 +139,72 @@
 			</tbody>
 		</table>
 	</div>
+
+	<div class="record-count">
+		<span>{items.length} record{items.length !== 1 ? 's' : ''}</span>
+	</div>
 {/if}
 
 {#if toast}
 	<div class={`***REMOVED***-toast ***REMOVED***-toast-${toast.type}`}>{toast.message}</div>
 {/if}
+
+<style>
+	.crud-loading {
+		display: flex;
+		align-items: center;
+		gap: 0.75rem;
+		font-family: var(--font-mono);
+		font-size: 0.75rem;
+		text-transform: uppercase;
+		color: var(--***REMOVED***-ink-muted);
+	}
+
+	.loading-box {
+		width: 14px;
+		height: 14px;
+		border: 3px solid var(--***REMOVED***-ink);
+		animation: spin-box 0.8s linear infinite;
+	}
+
+	@keyframes spin-box {
+		from { transform: rotate(0deg); }
+		to { transform: rotate(360deg); }
+	}
+
+	.empty-state {
+		text-align: center;
+		padding: 3rem 2rem;
+	}
+
+	.empty-icon {
+		font-size: 2.5rem;
+		margin-bottom: 0.75rem;
+		opacity: 0.5;
+	}
+
+	.empty-text {
+		font-family: var(--font-display);
+		font-size: 1.5rem;
+		letter-spacing: 1px;
+		text-transform: uppercase;
+		margin: 0;
+	}
+
+	.empty-hint {
+		font-family: var(--font-mono);
+		font-size: 0.72rem;
+		text-transform: uppercase;
+		color: var(--***REMOVED***-ink-muted);
+		margin: 0.5rem 0 0;
+	}
+
+	.record-count {
+		margin-top: 0.75rem;
+		font-family: var(--font-mono);
+		font-size: 0.65rem;
+		text-transform: uppercase;
+		letter-spacing: 0.5px;
+		color: var(--***REMOVED***-ink-muted);
+	}
+</style>

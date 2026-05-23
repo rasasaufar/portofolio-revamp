@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { onDestroy, onMount } from 'svelte';
 	import { submitContactMessage } from '$lib/api/public';
+	import { reveal, stagger } from '$lib/actions/reveal';
 	import type { GalleryImage } from '$lib/types/portfolio';
 
 	let { data } = $props();
@@ -139,7 +140,7 @@
 	});
 </script>
 
-<section id="hero" class="section-card section-identity fade-up" style="--delay:0;" data-stamp="identity">
+<section id="hero" class="section-card section-identity reveal-fade-up" use:reveal data-stamp="identity">
 	<div class="section-head">
 		<p class="section-kicker">Identity Console</p>
 	</div>
@@ -148,7 +149,7 @@
 		<span>IT IMPLEMENTATION // INFRASTRUCTURE // GOVERNMENT TECHNOLOGY DELIVERY //</span>
 	</div>
 	<div class="hero-grid">
-		<div>
+		<div class="reveal-fade-up" use:reveal={{ delay: 100 }}>
 			<h1 class="section-title">{identity?.name ?? ''}</h1>
 			<p class="statement"><strong>{identity?.role ?? ''}</strong></p>
 			<p class="statement" style="margin-top: 0.75rem;">{identity?.headline ?? ''}</p>
@@ -163,7 +164,7 @@
 				<a class="btn secondary" href={identity?.cta_secondary_link ?? '#contact'}>{identity?.cta_secondary_label ?? 'Open Contact Channel'}</a>
 			</div>
 		</div>
-		<div class="hero-visual-stack">
+		<div class="hero-visual-stack reveal-fade-up" use:reveal={{ delay: 200 }}>
 			<div class="hero-photo">
 				<img src={identity?.avatar_url || '/images/profile.png'} alt="{identity?.name ?? ''} portrait" loading="lazy" />
 			</div>
@@ -179,7 +180,7 @@
 	</div>
 </section>
 
-<section id="capabilities" class="section-card section-capabilities section-gap fade-up" style="--delay:1;" data-stamp="capability">
+<section id="capabilities" class="section-card section-capabilities section-gap reveal-fade-up" use:reveal data-stamp="capability">
 	<div class="section-head">
 		<p class="section-kicker">Capability Snapshot</p>
 		<h2 class="section-title">Implementation Strengths</h2>
@@ -187,7 +188,7 @@
 
 	<div class="grid-3" style="margin-top: 1rem;">
 		{#each capabilities as stat, index}
-			<div class="metric fade-up" style={`--delay:${index + 1}`}>
+			<div class="metric reveal-fade-up" use:reveal={{ delay: stagger(index, 100, 100) }}>
 				<strong>{stat.value}</strong>
 				<span>{stat.label}</span>
 			</div>
@@ -196,7 +197,7 @@
 
 	<div class="grid-3" style="margin-top: 1rem;">
 		{#each strengths as area, index}
-			<article class="subcard punch-card fade-up" style={`--delay:${index + 2}`}>
+			<article class="subcard punch-card reveal-fade-up" use:reveal={{ delay: stagger(index, 120, 200) }}>
 				<h3>{area.title}</h3>
 				<ul class="ul-tight" style="margin-top: 0.5rem;">
 					{#each area.bullet_points as point}
@@ -208,7 +209,7 @@
 	</div>
 
 	<div class="grid-2" style="margin-top: 1rem;">
-		<article class="subcard punch-card">
+		<article class="subcard punch-card reveal-slide-left" use:reveal={{ delay: 300 }}>
 			<h3>{dossier?.title ?? 'Professional Dossier'}</h3>
 			<div class="block-list" style="margin-top: 0.75rem;">
 				{#if dossier?.paragraph_1}<p style="margin: 0;">{dossier.paragraph_1}</p>{/if}
@@ -217,7 +218,7 @@
 			</div>
 		</article>
 
-		<article class="subcard punch-card">
+		<article class="subcard punch-card reveal-slide-right" use:reveal={{ delay: 400 }}>
 			<h3>Training and Education</h3>
 			<div class="edu-list" style="margin-top: 0.75rem;">
 				{#each education as edu}
@@ -247,7 +248,7 @@
 	</div>
 </section>
 
-<section id="operations" class="section-card section-operations section-gap fade-up" style="--delay:2;" data-stamp="operations">
+<section id="operations" class="section-card section-operations section-gap reveal-fade-up" use:reveal data-stamp="operations">
 	<div class="section-head">
 		<p class="section-kicker">Field Operations Timeline</p>
 		<h2 class="section-title">Work Experience</h2>
@@ -255,7 +256,7 @@
 
 	<div class="timeline-list" style="margin-top:1rem;">
 		{#each experiences as experience, experienceIndex}
-			<article class="subcard punch-card fade-up" style={`--delay:${experienceIndex + 1}`}>
+			<article class="subcard punch-card reveal-fade-up" use:reveal={{ delay: stagger(experienceIndex, 150, 100) }}>
 				<div class="experience-header">
 					<div style="display:flex; gap:0.75rem; align-items:center;">
 						<div class="logo-chip company-logo-chip">
@@ -310,7 +311,7 @@
 	</div>
 </section>
 
-<section id="laboratory" class="section-card section-laboratory section-gap fade-up" style="--delay:3;" data-stamp="lab">
+<section id="laboratory" class="section-card section-laboratory section-gap reveal-fade-up" use:reveal data-stamp="lab">
 	<div class="section-head">
 		<p class="section-kicker">Project Laboratory</p>
 		<h2 class="section-title">Case Works</h2>
@@ -345,7 +346,7 @@
 			</article>
 		{:else}
 			{#each filteredProjects as project, index}
-				<article class="subcard punch-card fade-up" style={`--delay:${index + 1}`}>
+				<article class="subcard punch-card reveal-scale" use:reveal={{ delay: stagger(index, 100, 80) }}>
 					<div class="project-media">
 						{#if project.image_url}
 							<img src={project.image_url} alt={project.title} loading="lazy" />
@@ -379,7 +380,7 @@
 	</div>
 </section>
 
-<section id="credentials" class="section-card section-credentials section-gap fade-up" style="--delay:4;" data-stamp="credentials">
+<section id="credentials" class="section-card section-credentials section-gap reveal-fade-up" use:reveal data-stamp="credentials">
 	<div class="section-head">
 		<p class="section-kicker">Credential Matrix</p>
 		<h2 class="section-title">Achievements and Certifications</h2>
@@ -393,7 +394,7 @@
 
 		<div class="credentials-list grid-3" style="margin-top:0.85rem;">
 			{#each coreCertificates as certificate, index}
-				<article class="subcard punch-card credential-card credential-card-core" style={`--delay:${index + 1}`}>
+				<article class="subcard punch-card credential-card credential-card-core reveal-scale" use:reveal={{ delay: stagger(index, 120, 100) }}>
 					<div class="cert-logo">
 						<img src={certificate.image_url} alt={certificate.issuer} loading="lazy" />
 					</div>
@@ -450,14 +451,14 @@
 	</details>
 </section>
 
-<section id="research" class="section-card section-research section-gap fade-up" style="--delay:5;" data-stamp="research">
+<section id="research" class="section-card section-research section-gap reveal-fade-up" use:reveal data-stamp="research">
 	<div class="section-head">
 		<p class="section-kicker">Research Spotlight</p>
 		<h2 class="section-title">Publication Archive</h2>
 	</div>
 
-	{#each publications as publication}
-		<article class="subcard punch-card" style="margin-top:1rem;">
+	{#each publications as publication, index}
+		<article class="subcard punch-card reveal-fade-up" use:reveal={{ delay: stagger(index, 120, 100) }} style="margin-top:1rem;">
 			<h3 class="publication-title">{publication.title}</h3>
 			<p class="mono" style="margin:0.4rem 0;">
 				{publication.journal_name} | {publication.published_date} | {publication.status}
@@ -478,14 +479,14 @@
 	{/each}
 </section>
 
-<section id="contact" class="section-card section-contact section-gap fade-up" style="--delay:6;" data-stamp="contact">
+<section id="contact" class="section-card section-contact section-gap reveal-fade-up" use:reveal data-stamp="contact">
 	<div class="section-head">
 		<p class="section-kicker">Contact Command Bar</p>
 		<h2 class="section-title">Open Communication Channel</h2>
 	</div>
 
 	<div class="contact-list grid-2" style="margin-top:1rem;">
-		<div class="subcard punch-card" style="background: var(--bg-soft);">
+		<div class="subcard punch-card reveal-slide-left" use:reveal={{ delay: 100 }} style="background: var(--bg-soft);">
 			<h3>Direct Contacts</h3>
 			<div class="block-list" style="margin-top:0.75rem;">
 				{#each contacts as contact}
@@ -497,7 +498,7 @@
 			</div>
 		</div>
 
-		<div class="subcard punch-card" style="background: var(--bg-blue);">
+		<div class="subcard punch-card reveal-slide-right" use:reveal={{ delay: 200 }} style="background: var(--bg-blue);">
 			<h3>Send A Message</h3>
 			<p class="mono" style="margin:0.6rem 0 0;">Your message goes straight to my inbox.</p>
 

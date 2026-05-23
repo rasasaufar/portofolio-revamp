@@ -117,13 +117,17 @@
 </div>
 
 {#if loading}
-	<p style="color: var(--***REMOVED***-text-muted);">Loading...</p>
+	<div class="form-loading">
+		<div class="loading-box"></div>
+		<span>Loading record...</span>
+	</div>
 {:else}
 	{#if error}
 		<div class="***REMOVED***-error">{error}</div>
 	{/if}
 
-	<div class="***REMOVED***-card">
+	<div class="***REMOVED***-card form-card">
+		<div class="form-stamp" aria-hidden="true">{isEdit ? 'EDIT' : 'NEW'}</div>
 		<form class="***REMOVED***-form" onsubmit={handleSubmit}>
 			{#each fields as field}
 				<div class="***REMOVED***-field">
@@ -151,16 +155,15 @@
 					{:else if field.type === 'json'}
 						<textarea
 							id={field.key}
-							class="***REMOVED***-input ***REMOVED***-textarea"
+							class="***REMOVED***-input ***REMOVED***-textarea json-field"
 							value={getJsonString(formData[field.key])}
 							oninput={(e) => { formData[field.key] = (e.target as HTMLTextAreaElement).value; }}
 							placeholder='["item1", "item2"]'
-							style="font-family: var(--***REMOVED***-mono); font-size: 0.8rem;"
 						></textarea>
 					{:else if field.type === 'boolean'}
-						<label style="display:flex; align-items:center; gap:0.5rem; cursor:pointer;">
+						<label class="bool-toggle">
 							<input type="checkbox" bind:checked={formData[field.key] as boolean} />
-							<span style="font-size:0.85rem;">{formData[field.key] ? 'Yes' : 'No'}</span>
+							<span class="bool-label">{formData[field.key] ? 'Yes' : 'No'}</span>
 						</label>
 					{:else if field.type === 'select' && field.options}
 						<select id={field.key} class="***REMOVED***-input ***REMOVED***-select" bind:value={formData[field.key] as string}>
@@ -194,12 +197,88 @@
 				</div>
 			{/each}
 
-			<div style="display:flex; gap:0.75rem; margin-top:0.5rem;">
+			<div class="form-actions">
 				<button class="***REMOVED***-btn ***REMOVED***-btn-primary" type="submit" disabled={saving}>
-					{saving ? 'Saving...' : isEdit ? 'Update' : 'Create'}
+					{saving ? '◈ Saving...' : isEdit ? '→ Update' : '→ Create'}
 				</button>
 				<a href={backHref} class="***REMOVED***-btn">Cancel</a>
 			</div>
 		</form>
 	</div>
 {/if}
+
+<style>
+	.form-loading {
+		display: flex;
+		align-items: center;
+		gap: 0.75rem;
+		font-family: var(--font-mono);
+		font-size: 0.75rem;
+		text-transform: uppercase;
+		color: var(--***REMOVED***-ink-muted);
+	}
+
+	.loading-box {
+		width: 14px;
+		height: 14px;
+		border: 3px solid var(--***REMOVED***-ink);
+		animation: spin-box 0.8s linear infinite;
+	}
+
+	@keyframes spin-box {
+		from { transform: rotate(0deg); }
+		to { transform: rotate(360deg); }
+	}
+
+	.form-card {
+		position: relative;
+	}
+
+	.form-stamp {
+		position: absolute;
+		top: -8px;
+		right: 16px;
+		font-family: var(--font-mono);
+		font-size: 0.58rem;
+		font-weight: 700;
+		text-transform: uppercase;
+		letter-spacing: 1.5px;
+		background: var(--***REMOVED***-blue);
+		border: 3px solid var(--***REMOVED***-ink);
+		box-shadow: 3px 3px 0 0 var(--***REMOVED***-ink);
+		padding: 0.15rem 0.45rem;
+	}
+
+	.json-field {
+		font-family: var(--font-mono);
+		font-size: 0.78rem;
+	}
+
+	.bool-toggle {
+		display: flex;
+		align-items: center;
+		gap: 0.55rem;
+		cursor: pointer;
+	}
+
+	.bool-toggle input {
+		width: 18px;
+		height: 18px;
+		accent-color: var(--***REMOVED***-ink);
+		cursor: pointer;
+	}
+
+	.bool-label {
+		font-family: var(--font-mono);
+		font-size: 0.78rem;
+		text-transform: uppercase;
+	}
+
+	.form-actions {
+		display: flex;
+		gap: 0.75rem;
+		margin-top: 0.5rem;
+		padding-top: 1rem;
+		border-top: 2px solid var(--***REMOVED***-ink);
+	}
+</style>

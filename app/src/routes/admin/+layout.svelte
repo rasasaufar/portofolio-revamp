@@ -10,19 +10,19 @@
 	let unreadCount = $state(0);
 
 	const navItems = [
-		{ href: '/***REMOVED***/dashboard', label: 'Dashboard', icon: '📊' },
-		{ href: '/***REMOVED***/identity', label: 'Identity Console', icon: '🆔' },
-		{ href: '/***REMOVED***/capabilities', label: 'Capabilities', icon: '📈' },
-		{ href: '/***REMOVED***/strengths', label: 'Strengths', icon: '💪' },
-		{ href: '/***REMOVED***/dossier', label: 'Dossier / About', icon: '📋' },
-		{ href: '/***REMOVED***/education', label: 'Education', icon: '🎓' },
-		{ href: '/***REMOVED***/experiences', label: 'Field Operations', icon: '💼' },
-		{ href: '/***REMOVED***/projects', label: 'Project Lab', icon: '🔬' },
-		{ href: '/***REMOVED***/certifications', label: 'Credentials', icon: '🏅' },
-		{ href: '/***REMOVED***/publications', label: 'Research', icon: '📄' },
-		{ href: '/***REMOVED***/contact', label: 'Contact', icon: '📞' },
-		{ href: '/***REMOVED***/messages', label: 'Messages', icon: '✉️' },
-		{ href: '/***REMOVED***/settings', label: 'Site Settings', icon: '⚙️' }
+		{ href: '/***REMOVED***/dashboard', label: 'Dashboard', icon: '◈' },
+		{ href: '/***REMOVED***/identity', label: 'Identity', icon: '▣' },
+		{ href: '/***REMOVED***/capabilities', label: 'Capabilities', icon: '△' },
+		{ href: '/***REMOVED***/strengths', label: 'Strengths', icon: '◆' },
+		{ href: '/***REMOVED***/dossier', label: 'Dossier', icon: '▤' },
+		{ href: '/***REMOVED***/education', label: 'Education', icon: '◎' },
+		{ href: '/***REMOVED***/experiences', label: 'Operations', icon: '▶' },
+		{ href: '/***REMOVED***/projects', label: 'Projects', icon: '⬡' },
+		{ href: '/***REMOVED***/certifications', label: 'Credentials', icon: '◇' },
+		{ href: '/***REMOVED***/publications', label: 'Research', icon: '▧' },
+		{ href: '/***REMOVED***/contact', label: 'Contact', icon: '◉' },
+		{ href: '/***REMOVED***/messages', label: 'Messages', icon: '▪' },
+		{ href: '/***REMOVED***/settings', label: 'Settings', icon: '⚙' }
 	];
 
 	const currentPath = $derived($page.url.pathname);
@@ -36,7 +36,6 @@
 
 		if ($isAuthenticated && !isLoginPage) {
 			loadUnreadCount();
-			// Poll every 30 seconds
 			const interval = setInterval(loadUnreadCount, 30000);
 			return () => clearInterval(interval);
 		}
@@ -61,14 +60,14 @@
 	<div class="***REMOVED***-layout">
 		<aside class="***REMOVED***-sidebar">
 			<div class="***REMOVED***-sidebar-brand">
-				<h2>// ADMIN</h2>
-				<p>Portfolio CMS</p>
+				<h2>Command<br/>Center</h2>
+				<p>Portfolio CMS v1.0</p>
 			</div>
 			<ul class="***REMOVED***-nav">
 				{#each navItems as item}
 					<li>
 						<a href={item.href} class:active={currentPath.startsWith(item.href)}>
-							<span>{item.icon}</span>
+							<span class="nav-icon">{item.icon}</span>
 							<span>{item.label}</span>
 							{#if item.href === '/***REMOVED***/messages' && unreadCount > 0}
 								<span class="***REMOVED***-nav-badge">{unreadCount}</span>
@@ -78,7 +77,7 @@
 				{/each}
 				<li>
 					<a href="/***REMOVED***/login" onclick={(e) => { e.preventDefault(); handleLogout(); }}>
-						<span>🚪</span>
+						<span class="nav-icon">✕</span>
 						<span>Logout</span>
 					</a>
 				</li>
@@ -90,6 +89,15 @@
 	</div>
 {:else}
 	<div class="***REMOVED***-login-wrap">
-		<p style="color: var(--***REMOVED***-text-muted);">Redirecting to login...</p>
+		<p style="font-family: var(--font-mono); text-transform: uppercase; font-size: 0.75rem;">Redirecting...</p>
 	</div>
 {/if}
+
+<style>
+	.nav-icon {
+		font-size: 0.85rem;
+		width: 1.2rem;
+		text-align: center;
+		flex-shrink: 0;
+	}
+</style>

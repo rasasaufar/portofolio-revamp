@@ -83,7 +83,7 @@
 				<button type="button" class="***REMOVED***-btn ***REMOVED***-btn-sm ***REMOVED***-btn-danger" onclick={clearImage}>Remove</button>
 			</div>
 		</div>
-		<input type="text" class="***REMOVED***-input" {value} readonly style="margin-top:0.5rem; font-size:0.75rem; color:var(--***REMOVED***-text-muted);" />
+		<input type="text" class="***REMOVED***-input" {value} readonly style="margin-top:0.5rem; font-size:0.72rem; font-family:var(--font-mono); color:var(--***REMOVED***-ink-muted);" />
 	{:else}
 		<div
 			class="upload-dropzone"
@@ -95,10 +95,13 @@
 			tabindex="0"
 		>
 			{#if uploading}
-				<p>Uploading...</p>
+				<div class="upload-loading">
+					<div class="loading-box"></div>
+					<p>Uploading...</p>
+				</div>
 			{:else}
-				<p>📁 Drag & drop image here</p>
-				<p style="font-size:0.75rem; color:var(--***REMOVED***-text-muted);">or click to browse</p>
+				<p class="drop-label">◇ Drag & drop image here</p>
+				<p class="drop-hint">or click to browse</p>
 				<input type="file" accept="image/*" onchange={handleFileInput} class="file-input" />
 			{/if}
 		</div>
@@ -116,8 +119,8 @@
 
 	.image-preview {
 		position: relative;
-		border: 1px solid var(--***REMOVED***-border);
-		border-radius: var(--***REMOVED***-radius);
+		border: 3px solid var(--***REMOVED***-ink);
+		box-shadow: 3px 3px 0 0 var(--***REMOVED***-ink);
 		overflow: hidden;
 		max-width: 300px;
 	}
@@ -137,23 +140,61 @@
 
 	.upload-dropzone {
 		position: relative;
-		border: 2px dashed var(--***REMOVED***-border);
-		border-radius: var(--***REMOVED***-radius);
+		border: 3px dashed var(--***REMOVED***-ink);
 		padding: 2rem;
 		text-align: center;
 		cursor: pointer;
-		transition: border-color 0.15s, background 0.15s;
+		transition: background 0.12s ease, transform 0.12s ease;
+		background: var(--***REMOVED***-soft);
 	}
 
 	.upload-dropzone:hover,
 	.upload-dropzone.drag-over {
-		border-color: var(--***REMOVED***-accent);
-		background: rgba(99, 102, 241, 0.05);
+		background: var(--***REMOVED***-yellow);
+		transform: translate(-2px, -2px);
+		box-shadow: 4px 4px 0 0 var(--***REMOVED***-ink);
 	}
 
-	.upload-dropzone p {
-		margin: 0.25rem 0;
-		color: var(--***REMOVED***-text-muted);
+	.drop-label {
+		margin: 0;
+		font-family: var(--font-mono);
+		font-size: 0.78rem;
+		text-transform: uppercase;
+		letter-spacing: 0.5px;
+	}
+
+	.drop-hint {
+		margin: 0.3rem 0 0;
+		font-family: var(--font-mono);
+		font-size: 0.65rem;
+		color: var(--***REMOVED***-ink-muted);
+		text-transform: uppercase;
+	}
+
+	.upload-loading {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		gap: 0.6rem;
+	}
+
+	.upload-loading p {
+		margin: 0;
+		font-family: var(--font-mono);
+		font-size: 0.75rem;
+		text-transform: uppercase;
+	}
+
+	.loading-box {
+		width: 12px;
+		height: 12px;
+		border: 3px solid var(--***REMOVED***-ink);
+		animation: spin-box 0.8s linear infinite;
+	}
+
+	@keyframes spin-box {
+		from { transform: rotate(0deg); }
+		to { transform: rotate(360deg); }
 	}
 
 	.file-input {
@@ -164,8 +205,10 @@
 	}
 
 	.upload-error {
+		font-family: var(--font-mono);
+		font-size: 0.72rem;
 		color: var(--***REMOVED***-danger);
-		font-size: 0.8rem;
 		margin-top: 0.4rem;
+		text-transform: uppercase;
 	}
 </style>

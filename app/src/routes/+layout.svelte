@@ -22,15 +22,32 @@
 	];
 
 	let activeSection = $state(navigation[0]?.id ?? 'hero');
+	let navScrolled = $state(false);
+	let showBackToTop = $state(false);
+
+	function scrollToTop() {
+		window.scrollTo({ top: 0, behavior: 'smooth' });
+	}
 
 	onMount(() => {
 		if (isAdmin) return;
+
+		// Navbar scroll effect
+		const handleScroll = () => {
+			navScrolled = window.scrollY > 40;
+			showBackToTop = window.scrollY > 600;
+		};
+
+		handleScroll(); // initial check
+		window.addEventListener('scroll', handleScroll, { passive: true });
 
 		const sections = navigation
 			.map((item) => document.getElementById(item.id))
 			.filter((section): section is HTMLElement => section !== null);
 
-		if (!sections.length) return;
+		if (!sections.length) {
+			return () => { window.removeEventListener('scroll', handleScroll); };
+		}
 
 		const visibility = new Map<string, number>();
 		for (const section of sections) {
@@ -79,6 +96,7 @@
 		window.addEventListener('hashchange', applyHashSection);
 
 		return () => {
+			window.removeEventListener('scroll', handleScroll);
 			window.removeEventListener('hashchange', applyHashSection);
 			observer.disconnect();
 		};
@@ -97,7 +115,7 @@
 	<!-- Admin pages render without public layout -->
 	{@render children()}
 {:else}
-	<div class="nav-wrap">
+	<div class="nav-wrap" class:nav-scrolled={navScrolled}>
 		<div class="shell nav-content">
 			<a class="brand" href="#hero" onclick={() => (activeSection = 'hero')}>
 				<span class="brand-badge" aria-hidden="true"></span>
@@ -127,4 +145,17 @@
 			<span>constructed with sveltekit</span>
 		</footer>
 	</main>
+
+	<!-- Back to Top Button -->
+	<button
+		type="button"
+		class="back-to-top"
+		class:visible={showBackToTop}
+		onclick={scrollToTop}
+		aria-label="Back to top"
+	>
+		<svg viewBox="0 0 24 24" aria-hidden="true">
+			<polyline points="18 15 12 9 6 15"></polyline>
+		</svg>
+	</button>
 {/if}
