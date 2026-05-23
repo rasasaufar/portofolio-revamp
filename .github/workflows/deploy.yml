@@ -1,4 +1,4 @@
-name: Deploy Portofolio Svelte
+name: Deploy Portofolio Revamp
 
 on:
   push:
@@ -8,7 +8,6 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-
     steps:
       - name: Deploy via SSH
         uses: appleboy/ssh-action@v1.0.3
@@ -17,8 +16,7 @@ jobs:
           username: ${{ secrets.VPS_USER }}
           key: ${{ secrets.VPS_KEY }}
           script: |
-            cd /home/project-web-acas/portofolio-svelte
+            cd /home/project-web-acas/portofolio-revamp
             git pull origin main
-
-            cd /home/project-web-acas
-            docker compose up -d --build portofolio-svelte
+            docker compose up -d --build
+            echo "✅ Deploy complete at $(date)"
