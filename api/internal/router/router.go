@@ -30,11 +30,14 @@ func New(db *pgxpool.Pool, authService *service.AuthService, corsOrigin string) 
 
 	// Upload handler
 	uploadDir := getUploadDir()
-	serverPort := os.Getenv("SERVER_PORT")
-	if serverPort == "" {
-		serverPort = "8080"
+	baseURL := os.Getenv("PUBLIC_URL")
+	if baseURL == "" {
+		serverPort := os.Getenv("SERVER_PORT")
+		if serverPort == "" {
+			serverPort = "8080"
+		}
+		baseURL = fmt.Sprintf("http://localhost:%s", serverPort)
 	}
-	baseURL := fmt.Sprintf("http://localhost:%s", serverPort)
 	uploadHandler := handler.NewUploadHandler(uploadDir, baseURL)
 
 	// Handlers
