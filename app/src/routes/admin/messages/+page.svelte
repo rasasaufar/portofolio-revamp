@@ -1,10 +1,13 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import { listResource, deleteResource, markMessageRead } from '$lib/api/***REMOVED***';
+	import ConfirmDialog from '$lib/components/***REMOVED***/ConfirmDialog.svelte';
 
 	let messages = $state<Record<string, unknown>[]>([]);
 	let loading = $state(true);
 	let selectedMessage = $state<Record<string, unknown> | null>(null);
+	let confirmOpen = $state(false);
+	let deleteTargetId = $state<string | null>(null);
 
 	onMount(async () => {
 		try { messages = await listResource('messages'); } catch {}
@@ -24,13 +27,25 @@
 		selectedMessage = null;
 	}
 
-	async function handleDelete(id: string) {
-		if (!confirm('Delete this message?')) return;
-		await deleteResource('messages', id);
-		messages = messages.filter(m => m.id !== id);
-		if (selectedMessage && selectedMessage.id === id) {
+	function handleDelete(id: string) {
+		deleteTargetId = id;
+		confirmOpen = true;
+	}
+
+	async function confirmDelete() {
+		if (!deleteTargetId) return;
+		confirmOpen = false;
+		await deleteResource('messages', deleteTargetId);
+		messages = messages.filter(m => m.id !== deleteTargetId);
+		if (selectedMessage && selectedMessage.id === deleteTargetId) {
 			selectedMessage = null;
 		}
+		deleteTargetId = null;
+	}
+
+	function cancelDelete() {
+		confirmOpen = false;
+		deleteTargetId = null;
 	}
 
 	function formatDate(dateStr: unknown): string {
@@ -125,6 +140,17 @@
 		</div>
 	</div>
 {/if}
+
+<ConfirmDialog
+	open={confirmOpen}
+	title="Hapus Pesan"
+	message="Apakah kamu yakin ingin menghapus pesan ini? Tindakan ini tidak bisa dibatalkan."
+	confirmText="Hapus"
+	cancelText="Batal"
+	variant="danger"
+	onconfirm={confirmDelete}
+	oncancel={cancelDelete}
+/>
 
 <style>
 	.msg-count {

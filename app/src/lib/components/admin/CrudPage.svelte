@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import { listResource, deleteResource, publishResource, unpublishResource } from '$lib/api/***REMOVED***';
+	import ConfirmDialog from './ConfirmDialog.svelte';
 
 	interface FieldDef {
 		key: string;
@@ -26,6 +27,8 @@
 	let items = $state<Record<string, unknown>[]>([]);
 	let loading = $state(true);
 	let toast = $state<{ type: string; message: string } | null>(null);
+	let confirmOpen = $state(false);
+	let deleteTargetId = $state<string | null>(null);
 
 	const tableFields = $derived(fields.filter((f) => f.showInTable !== false));
 
@@ -39,15 +42,27 @@
 		loading = false;
 	}
 
-	async function handleDelete(id: string) {
-		if (!confirm('Are you sure you want to delete this record?')) return;
+	function handleDelete(id: string) {
+		deleteTargetId = id;
+		confirmOpen = true;
+	}
+
+	async function confirmDelete() {
+		if (!deleteTargetId) return;
+		confirmOpen = false;
 		try {
-			await deleteResource(resource, id);
+			await deleteResource(resource, deleteTargetId);
 			showToast('success', 'Record deleted');
 			await loadData();
 		} catch (e) {
 			showToast('error', e instanceof Error ? e.message : 'Delete failed');
 		}
+		deleteTargetId = null;
+	}
+
+	function cancelDelete() {
+		confirmOpen = false;
+		deleteTargetId = null;
 	}
 
 	async function handlePublish(id: string, published: boolean) {
@@ -144,6 +159,17 @@
 		<span>{items.length} record{items.length !== 1 ? 's' : ''}</span>
 	</div>
 {/if}
+
+<ConfirmDialog
+	open={confirmOpen}
+	title="Hapus Data"
+	message="Apakah kamu yakin ingin menghapus data ini? Tindakan ini tidak bisa dibatalkan."
+	confirmText="Hapus"
+	cancelText="Batal"
+	variant="danger"
+	onconfirm={confirmDelete}
+	oncancel={cancelDelete}
+/>
 
 {#if toast}
 	<div class={`***REMOVED***-toast ***REMOVED***-toast-${toast.type}`}>{toast.message}</div>
