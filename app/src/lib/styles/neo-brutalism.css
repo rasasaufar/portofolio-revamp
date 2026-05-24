@@ -126,7 +126,7 @@ main {
 
 .section-card {
   position: relative;
-  overflow: hidden;
+  overflow: visible;
   border: var(--border-thick);
   box-shadow: var(--shadow-hard);
   background: var(--bg-soft);
@@ -1106,6 +1106,15 @@ main {
   .section-card::before {
     width: 26px;
     height: 26px;
+  }
+
+  .section-card {
+    overflow: visible;
+  }
+
+  .section-card:hover {
+    transform: none;
+    box-shadow: var(--shadow-hard);
   }
 
   .nav-content {
