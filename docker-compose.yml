@@ -47,7 +47,7 @@ services:
     build:
       context: ./app
       args:
-        PUBLIC_API_BASE_URL: https://revamp.rasasaufar.site
+        PUBLIC_API_BASE_URL: https://rasasaufar.site
     container_name: portfolio-revamp-frontend
     restart: unless-stopped
     ports:
