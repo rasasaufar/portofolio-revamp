@@ -26,5 +26,35 @@ services:
     depends_on:
       - postgres
 
+  api:
+    build: ./api
+    container_name: portfolio-revamp-api
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:8081:8080"
+    environment:
+      DATABASE_URL: postgres://portfolio:***REMOVED***@postgres:5432/portfolio_db?sslmode=disable
+      JWT_SECRET: ${JWT_SECRET:-***REMOVED***}
+      JWT_EXPIRY: 24h
+      CORS_ORIGIN: https://revamp.rasasaufar.site
+      ADMIN_DEFAULT_PASSWORD: ${ADMIN_DEFAULT_PASSWORD:-***REMOVED***123}
+    depends_on:
+      - postgres
+    volumes:
+      - api-uploads:/app/uploads
+
+  frontend:
+    build:
+      context: ./app
+      args:
+        PUBLIC_API_BASE_URL: https://revamp.rasasaufar.site
+    container_name: portfolio-revamp-frontend
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:3006:3000"
+    depends_on:
+      - api
+
 volumes:
   postgres_data:
+  api-uploads:
