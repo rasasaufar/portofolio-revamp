@@ -47,7 +47,7 @@ services:
     build:
       context: ./app
       args:
-        VITE_API_BASE_URL: http://api:8080
+        VITE_API_BASE_URL: https://rasasaufar.site
     container_name: portfolio-revamp-frontend
     restart: unless-stopped
     ports:
