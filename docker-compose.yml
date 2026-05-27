@@ -36,7 +36,7 @@ services:
       DATABASE_URL: postgres://portfolio:***REMOVED***@postgres:5432/portfolio_db?sslmode=disable
       JWT_SECRET: ${JWT_SECRET:-***REMOVED***}
       JWT_EXPIRY: 24h
-      CORS_ORIGIN: https://revamp.rasasaufar.site
+      CORS_ORIGIN: https://rasasaufar.site
       ADMIN_DEFAULT_PASSWORD: ${ADMIN_DEFAULT_PASSWORD:-***REMOVED***123}
     depends_on:
       - postgres
