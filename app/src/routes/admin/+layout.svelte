@@ -75,13 +75,17 @@
 						</a>
 					</li>
 				{/each}
-				<li>
-					<a href="/***REMOVED***/login" onclick={(e) => { e.preventDefault(); handleLogout(); }}>
-						<span class="nav-icon">✕</span>
-						<span>Logout</span>
-					</a>
-				</li>
 			</ul>
+			<div class="***REMOVED***-sidebar-bottom">
+				<a href="/" class="sidebar-bottom-link" target="_blank">
+					<span class="nav-icon">↗</span>
+					<span>View Website</span>
+				</a>
+				<a href="/***REMOVED***/login" class="sidebar-bottom-link logout-link" onclick={(e) => { e.preventDefault(); handleLogout(); }}>
+					<span class="nav-icon">✕</span>
+					<span>Logout</span>
+				</a>
+			</div>
 		</aside>
 		<main class="***REMOVED***-main">
 			{@render children()}

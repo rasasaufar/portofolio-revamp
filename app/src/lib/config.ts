@@ -1,5 +1,5 @@
 /**
  * Shared API configuration.
- * Change this URL when deploying to production.
+ * Uses the VITE_API_URL environment variable, with a local fallback.
  */
-export const API_BASE_URL = 'http://localhost:8081';
+export const API_BASE_URL = import.meta.env.VITE_API_URL ?? 'http://localhost:8080';
