@@ -19,7 +19,7 @@ services:
     container_name: portfolio-pg***REMOVED***
     restart: unless-stopped
     environment:
-      PGADMIN_DEFAULT_EMAIL: ***REMOVED***@portfolio.local
+      PGADMIN_DEFAULT_EMAIL: ***REMOVED***@portfolio.com
       PGADMIN_DEFAULT_PASSWORD: ***REMOVED***
     ports:
       - "5050:80"
