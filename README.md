@@ -1,6 +1,6 @@
 # 🎨 Portfolio Revamp
 
-> A modern personal portfolio and content dashboard for showcasing projects, credentials, and professional milestones.
+> A polished portfolio platform for showcasing projects, credentials, and professional milestones with a secure content dashboard.
 
 ![Svelte](https://img.shields.io/badge/Svelte-FF3E00?style=for-the-badge&logo=svelte&logoColor=white)
 ![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white)
@@ -11,40 +11,39 @@
 
 **Portfolio Revamp** is a personal portfolio website and project showcase built with SvelteKit and Go, featuring a dynamic ***REMOVED*** dashboard for managing projects, certifications, work experience, and education records.
 
-Production domain: [rasasaufar.site](https://rasasaufar.site) with Cloudflare SSL Full Strict.
+Production domain: [rasasaufar.site](https://rasasaufar.site), secured with Cloudflare SSL Full Strict.
 
 ## ✨ Features
 
 **Project showcase**  
-Display portfolio projects with rich descriptions, technology tags, preview images, live demo links, and repository links. Featured projects can be highlighted and reordered from the ***REMOVED*** dashboard.
+Display portfolio projects with clear descriptions, technologies used, images, and links. The showcase is designed to make each project easy to scan while still giving enough context for visitors to understand the work.
 
 **Certification management**  
-Add, edit, delete, publish, and organize professional certifications. Each certification can include issuer details, credential IDs, credential URLs, skill tags, status, and supporting images.
+Add, edit, and delete professional certifications from the ***REMOVED*** dashboard. Certification records can be organized as part of the public portfolio to highlight verified learning, achievements, and industry credentials.
 
 **Work experience timeline**  
-Manage work history entries as a clean professional timeline. Each experience supports roles, company details, start and end dates, current-position flags, bullet points, tech tags, logos, and gallery images.
+Manage work history entries in a structured timeline format. Each entry can capture role details, company information, dates, descriptions, and supporting highlights.
 
 **Education records**  
-Track educational background with institution data, degree information, major, year range, GPA, descriptions, tags, and image assets.
+Track educational background in a dedicated content area. Education entries help present academic history alongside project work and professional experience.
 
 **Admin dashboard**  
-Secure JWT-authenticated ***REMOVED*** panel for CRUD operations across portfolio content, including identity, capabilities, strengths, dossier, education, experiences, projects, certifications, publications, contact information, messages, and site settings.
+Secure JWT-authenticated ***REMOVED*** panel for CRUD operations across portfolio content. The dashboard centralizes content management for projects, certifications, work experience, education records, and other site data.
 
 **File uploads**  
-Upload and serve project images, avatars, logos, certification images, and other visual assets used throughout the portfolio.
+Support for uploading project images, avatars, and other visual assets used across the portfolio. Uploaded files can be managed through backend services and displayed on the frontend.
 
 **Responsive design**  
-Mobile-first SvelteKit frontend with a clean UI, responsive layouts, and polished ***REMOVED*** workflows for managing content on any screen size.
+Mobile-first interface with a clean UI built for readability and usability across devices. The public site and dashboard are designed to remain comfortable on both desktop and smaller screens.
 
 ## 🧰 Tech Stack
 
 | Layer | Technology |
 |---|---|
-| Frontend | SvelteKit, Svelte 5, TypeScript, adapter-node |
+| Frontend | SvelteKit, Svelte 5, adapter-node, TypeScript |
 | Backend | Go, chi router, pgx/v5, JWT authentication |
 | Database | PostgreSQL 16 Alpine |
-| Deployment | Docker Compose, Nginx reverse proxy, Let's Encrypt SSL |
-| CI/CD | GitHub Actions |
+| Deployment | Docker Compose, Nginx reverse proxy, Let's Encrypt SSL, GitHub Actions CI/CD |
 | Domain & SSL | rasasaufar.site, Cloudflare SSL Full Strict |
 
 ## 🧱 Docker Architecture
@@ -53,8 +52,8 @@ Mobile-first SvelteKit frontend with a clean UI, responsive layouts, and polishe
 |---|---|
 | Frontend | SvelteKit app served via Nginx reverse proxy |
 | API | Go backend served via Nginx reverse proxy |
-| PostgreSQL | Database used by the API, available internally to the Docker network |
-| pgAdmin | Database management UI, intended for internal ***REMOVED***istration only |
+| PostgreSQL | Database (internal only) |
+| pgAdmin | Database management UI (internal only) |
 
 ```text
 Client
@@ -66,7 +65,7 @@ Cloudflare SSL Full Strict
 Nginx Reverse Proxy
   |--------------------|
   v                    v
-SvelteKit Frontend   Go API
+Frontend             API
                        |
                        v
                   PostgreSQL
@@ -74,116 +73,66 @@ SvelteKit Frontend   Go API
 
 ## 📋 Prerequisites
 
-- Node.js 18 or newer
-- Go 1.26 or compatible with the version declared in `api/go.mod`
+- Node.js
+- Go
 - Docker and Docker Compose
-- PostgreSQL client tools, optional for manual database inspection
-- Nginx and Let's Encrypt tooling for production deployment
-- Cloudflare account configured for `rasasaufar.site`
+- Nginx for production reverse proxy
+- Let's Encrypt for SSL certificates
+- Cloudflare configured for `rasasaufar.site`
 
 ## 🚀 Installation & Setup
 
 ### 1. Clone the repository
 
 ```bash
-git clone https://github.com/your-username/portofolio-revamp.git
+git clone <repository-url>
 cd portofolio-revamp
 ```
 
-### 2. Configure environment variables
+### 2. Configure environment files
 
-Create environment files for the API, frontend, and Docker Compose deployment.
+Copy the example environment files:
 
 ```bash
 cp api/.env.example api/.env
 cp app/.env.example app/.env
-touch .env
+cp .env.example .env
 ```
 
-Recommended production-oriented variables:
+Configure your environment variables in `.env` (see `.env.example` for reference).
 
-```env
-# Backend
-DATABASE_URL=postgres://portfolio:change_me@postgres/portfolio_db?sslmode=disable
-JWT_SECRET=replace-with-a-long-random-secret
-ADMIN_PASSWORD=replace-with-a-secure-***REMOVED***-password
-ADMIN_DEFAULT_PASSWORD=replace-with-a-secure-***REMOVED***-password
-CORS_ORIGIN=https://rasasaufar.site
+Required environment variables include:
 
-# Frontend
-PUBLIC_API_BASE_URL=https://rasasaufar.site
-VITE_API_BASE_URL=https://rasasaufar.site
+```text
+DATABASE_URL
+JWT_SECRET
+ADMIN_PASSWORD
+CORS_ORIGIN
+PUBLIC_API_BASE_URL
 ```
-
-`ADMIN_DEFAULT_PASSWORD` and `VITE_API_BASE_URL` are used by the current codebase. `ADMIN_PASSWORD` and `PUBLIC_API_BASE_URL` are documented as deployment-facing aliases when standardizing environment naming.
 
 ### 3. Start with Docker Compose
 
 ```bash
-docker compose up -d --build
-```
-
-Run migrations and seed the first ***REMOVED*** user when needed:
-
-```bash
-docker compose exec api ./server -migrate
-docker compose exec api ./server -seed
+docker compose up --build
 ```
 
 ### 4. Run locally for development
 
-Start the backend:
-
-```bash
-cd api
-cp .env.example .env
-make migrate
-make seed
-make run
-```
-
-Start the frontend in another terminal:
+Install and run the frontend:
 
 ```bash
 cd app
-cp .env.example .env
 npm install
 npm run dev
 ```
 
-### 5. Verify the API
+Run the backend:
 
 ```bash
-curl https://rasasaufar.site/api/health
-```
-
-Example login request:
-
-```bash
-curl -X POST https://rasasaufar.site/api/auth/login \
-  -H "Content-Type: application/json" \
-  -d '{
-    "username": "***REMOVED***",
-    "password": "your-***REMOVED***-password"
-  }'
-```
-
-Example authenticated project creation:
-
-```bash
-curl -X POST https://rasasaufar.site/api/***REMOVED***/projects \
-  -H "Authorization: Bearer <jwt-token>" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "title": "Portfolio Revamp",
-    "category": "Web Application",
-    "description": "A SvelteKit and Go portfolio platform.",
-    "tech_tags": ["SvelteKit", "Go", "PostgreSQL"],
-    "demo_url": "https://rasasaufar.site",
-    "is_featured": true,
-    "order_number": 1,
-    "is_published": true
-  }'
+cd api
+go mod download
+go run ./cmd/server
 ```
 
 ## 📁 Project Structure
@@ -209,73 +158,15 @@ portofolio-revamp/
 └── README.md
 ```
 
-## 🔌 API Endpoints
+## 🔌 API Overview
 
-### Public
+The API provides RESTful endpoints for managing projects, certifications, work experience, and education records. It also supports authentication, dashboard content management, file uploads, and public portfolio data delivery.
 
-| Method | Endpoint | Description |
-|---|---|---|
-| GET | `/api/health` | Check API and database health |
-| POST | `/api/auth/login` | Authenticate ***REMOVED*** user and return a JWT |
-| GET | `/api/identity` | Get published identity and hero profile data |
-| GET | `/api/capabilities` | Get published capability snapshots |
-| GET | `/api/strengths` | Get published implementation strengths |
-| GET | `/api/dossier` | Get published professional dossier content |
-| GET | `/api/education` | Get published education records |
-| GET | `/api/experiences` | Get published work experience entries |
-| GET | `/api/projects` | Get published portfolio projects |
-| GET | `/api/certifications` | Get published certifications |
-| GET | `/api/publications` | Get published publications |
-| GET | `/api/contact-info` | Get published contact information |
-| GET | `/api/site-settings` | Get public site settings |
-| POST | `/api/contact/messages` | Submit a contact message |
-| GET | `/uploads/*` | Serve uploaded public assets |
-
-### Authenticated
-
-| Method | Endpoint | Description |
-|---|---|---|
-| GET | `/api/auth/me` | Get the currently authenticated ***REMOVED*** profile |
-| PUT | `/api/auth/password` | Change the authenticated ***REMOVED*** password |
-| POST | `/api/upload` | Upload images or files for portfolio content |
-
-### Admin
-
-Admin endpoints require a valid JWT in the `Authorization: Bearer <token>` header.
-
-| Method | Endpoint | Description |
-|---|---|---|
-| GET | `/api/***REMOVED***/dashboard/stats` | Get dashboard statistics and unread message count |
-| GET | `/api/***REMOVED***/{resource}` | List records for an ***REMOVED*** resource |
-| POST | `/api/***REMOVED***/{resource}` | Create a new resource record |
-| PUT | `/api/***REMOVED***/{resource}/reorder` | Reorder records for sortable resources |
-| GET | `/api/***REMOVED***/{resource}/{id}` | Get a single resource record by ID |
-| PUT | `/api/***REMOVED***/{resource}/{id}` | Update a resource record by ID |
-| DELETE | `/api/***REMOVED***/{resource}/{id}` | Delete a resource record by ID |
-| PATCH | `/api/***REMOVED***/{resource}/{id}/publish` | Publish a resource record |
-| PATCH | `/api/***REMOVED***/{resource}/{id}/unpublish` | Unpublish a resource record |
-| PATCH | `/api/***REMOVED***/messages/{id}/read` | Mark a contact message as read |
-
-Supported ***REMOVED*** resources:
-
-```text
-identity
-capabilities
-strengths
-dossier
-education
-experiences
-projects
-certifications
-publications
-contact
-messages
-settings
-```
+Full API documentation is available in `docs/API.md`.
 
 ## 🖼️ Screenshots
 
-Screenshots can be added here as the UI stabilizes.
+Screenshots can be added here as the interface evolves.
 
 | Page | Preview |
 |---|---|
@@ -286,15 +177,13 @@ Screenshots can be added here as the UI stabilizes.
 
 ## 🤝 Contributing
 
-Contributions are welcome. For a clean workflow:
+Contributions are welcome. Please keep changes focused, documented, and easy to review.
 
-1. Fork the repository.
-2. Create a feature branch.
-3. Make focused changes with clear commit messages.
-4. Run frontend and backend checks before opening a pull request.
-5. Open a pull request with a concise description, screenshots for UI changes, and notes for any migration or deployment impact.
+```bash
+git checkout -b feature/your-feature-name
+```
 
-Useful checks:
+Before opening a pull request, run the relevant checks for the frontend and backend:
 
 ```bash
 cd app
@@ -308,4 +197,4 @@ go test ./...
 
 ## 📄 License
 
-This project is licensed under the MIT License. See `LICENSE` for details.
+This project is licensed under the MIT License.
