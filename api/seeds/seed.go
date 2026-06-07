@@ -91,7 +91,7 @@ func seedAdminUser(ctx context.Context, pool *pgxpool.Pool, password string) err
 
 	_, err = pool.Exec(ctx,
 		`INSERT INTO admin_users (email, password_hash, name) VALUES ($1, $2, $3)`,
-		"***REMOVED***", hash, "Admin",
+		"admin@portfolio.local", hash, "Admin",
 	)
 	if err != nil {
 		return err

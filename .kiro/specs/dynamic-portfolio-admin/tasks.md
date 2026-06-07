@@ -174,7 +174,7 @@ Transform the existing static SvelteKit portfolio into a dynamic system with a G
 - [ ] 7. Seed Data
   - [ ] 7.1 Create `api/seeds/seed.go` with seed function that populates all tables from existing portfolio.ts data
     - _Requirements: 3.1_
-  - [ ] 7.2 Include default admin user creation (***REMOVED***) with bcrypt-hashed password from ADMIN_DEFAULT_PASSWORD env var
+  - [ ] 7.2 Include default admin user creation (admin@portfolio.local) with bcrypt-hashed password from ADMIN_DEFAULT_PASSWORD env var
     - _Requirements: 3.2_
   - [ ] 7.3 Include default site_settings record with current meta title and description
     - _Requirements: 3.3_

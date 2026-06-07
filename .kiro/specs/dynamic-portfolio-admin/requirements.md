@@ -49,7 +49,7 @@ Transform the existing static SvelteKit portfolio website into a dynamic portfol
 #### Acceptance Criteria
 
 1. WHEN the Seed_Runner executes, THE Database SHALL be populated with all existing portfolio content matching the current static data in `portfolio.ts`
-2. WHEN the Seed_Runner executes, THE Database SHALL contain a default admin account with email `***REMOVED***` and a bcrypt-hashed password
+2. WHEN the Seed_Runner executes, THE Database SHALL contain a default admin account with email `admin@portfolio.local` and a bcrypt-hashed password
 3. WHEN the Seed_Runner executes, THE Database SHALL contain default site settings including site title, meta description, and theme mode
 4. IF the Seed_Runner is executed on a database that already contains data, THEN THE Seed_Runner SHALL skip insertion to avoid duplicate records
 
