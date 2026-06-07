@@ -4,6 +4,7 @@
 	import { browser } from '$app/environment';
 	import { login } from '$lib/api/admin';
 	import { setToken } from '$lib/stores/auth';
+	import PasswordInput from '$lib/components/admin/PasswordInput.svelte';
 
 	const REMEMBER_KEY = 'portfolio_admin_remember';
 
@@ -68,7 +69,7 @@
 			</div>
 			<div class="admin-field">
 				<label for="password">Password</label>
-				<input id="password" class="admin-input" type="password" bind:value={password} required autocomplete="current-password" placeholder="••••••••" />
+				<PasswordInput id="password" bind:value={password} required autocomplete="current-password" placeholder="••••••••" />
 			</div>
 			<label class="remember-label">
 				<input type="checkbox" bind:checked={rememberMe} class="remember-check" />

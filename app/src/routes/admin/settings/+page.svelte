@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import { changePassword, getMe, listResource, updateProfile, updateResource } from '$lib/api/admin';
+	import PasswordInput from '$lib/components/admin/PasswordInput.svelte';
 
 	let formData = $state<Record<string, unknown>>({});
 	let accountForm = $state({
@@ -139,7 +140,7 @@
 				</div>
 				<div class="admin-field">
 					<label for="profile_current_password">Current Password</label>
-					<input id="profile_current_password" class="admin-input" type="password" bind:value={accountForm.current_password} required autocomplete="current-password" />
+					<PasswordInput id="profile_current_password" bind:value={accountForm.current_password} required autocomplete="current-password" />
 				</div>
 				<div class="settings-actions">
 					<button class="admin-btn admin-btn-primary" type="submit" disabled={savingProfile}>
@@ -155,15 +156,15 @@
 			<form class="admin-form" onsubmit={handlePasswordSave}>
 				<div class="admin-field">
 					<label for="password_current_password">Current Password</label>
-					<input id="password_current_password" class="admin-input" type="password" bind:value={passwordForm.current_password} required autocomplete="current-password" />
+					<PasswordInput id="password_current_password" bind:value={passwordForm.current_password} required autocomplete="current-password" />
 				</div>
 				<div class="admin-field">
 					<label for="new_password">New Password</label>
-					<input id="new_password" class="admin-input" type="password" bind:value={passwordForm.new_password} required minlength="6" autocomplete="new-password" />
+					<PasswordInput id="new_password" bind:value={passwordForm.new_password} required minlength={6} autocomplete="new-password" />
 				</div>
 				<div class="admin-field">
 					<label for="confirm_password">Confirm New Password</label>
-					<input id="confirm_password" class="admin-input" type="password" bind:value={passwordForm.confirm_password} required minlength="6" autocomplete="new-password" />
+					<PasswordInput id="confirm_password" bind:value={passwordForm.confirm_password} required minlength={6} autocomplete="new-password" />
 				</div>
 				<div class="settings-actions">
 					<button class="admin-btn admin-btn-primary" type="submit" disabled={savingPassword}>
