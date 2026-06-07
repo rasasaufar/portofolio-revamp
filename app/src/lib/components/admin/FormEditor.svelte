@@ -1,10 +1,10 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
 	import { onMount } from 'svelte';
-	import { getResource, createResource, updateResource } from '$lib/api/***REMOVED***';
-	import ImageUpload from '$lib/components/***REMOVED***/ImageUpload.svelte';
-	import TagListEditor from '$lib/components/***REMOVED***/TagListEditor.svelte';
-	import GalleryEditor from '$lib/components/***REMOVED***/GalleryEditor.svelte';
+	import { getResource, createResource, updateResource } from '$lib/api/admin';
+	import ImageUpload from '$lib/components/admin/ImageUpload.svelte';
+	import TagListEditor from '$lib/components/admin/TagListEditor.svelte';
+	import GalleryEditor from '$lib/components/admin/GalleryEditor.svelte';
 
 	interface FieldDef {
 		key: string;
@@ -111,9 +111,9 @@
 	}
 </script>
 
-<div class="***REMOVED***-header">
+<div class="admin-header">
 	<h1>{isEdit ? 'Edit' : 'New'} {title}</h1>
-	<a href={backHref} class="***REMOVED***-btn">← Back</a>
+	<a href={backHref} class="admin-btn">← Back</a>
 </div>
 
 {#if loading}
@@ -123,20 +123,20 @@
 	</div>
 {:else}
 	{#if error}
-		<div class="***REMOVED***-error">{error}</div>
+		<div class="admin-error">{error}</div>
 	{/if}
 
-	<div class="***REMOVED***-card form-card">
+	<div class="admin-card form-card">
 		<div class="form-stamp" aria-hidden="true">{isEdit ? 'EDIT' : 'NEW'}</div>
-		<form class="***REMOVED***-form" onsubmit={handleSubmit}>
+		<form class="admin-form" onsubmit={handleSubmit}>
 			{#each fields as field}
-				<div class="***REMOVED***-field">
+				<div class="admin-field">
 					<label for={field.key}>{field.label}{field.required ? ' *' : ''}</label>
 
 					{#if field.type === 'textarea'}
 						<textarea
 							id={field.key}
-							class="***REMOVED***-input ***REMOVED***-textarea"
+							class="admin-input admin-textarea"
 							bind:value={formData[field.key] as string}
 							required={field.required}
 							placeholder={field.placeholder}
@@ -155,7 +155,7 @@
 					{:else if field.type === 'json'}
 						<textarea
 							id={field.key}
-							class="***REMOVED***-input ***REMOVED***-textarea json-field"
+							class="admin-input admin-textarea json-field"
 							value={getJsonString(formData[field.key])}
 							oninput={(e) => { formData[field.key] = (e.target as HTMLTextAreaElement).value; }}
 							placeholder='["item1", "item2"]'
@@ -166,7 +166,7 @@
 							<span class="bool-label">{formData[field.key] ? 'Yes' : 'No'}</span>
 						</label>
 					{:else if field.type === 'select' && field.options}
-						<select id={field.key} class="***REMOVED***-input ***REMOVED***-select" bind:value={formData[field.key] as string}>
+						<select id={field.key} class="admin-input admin-select" bind:value={formData[field.key] as string}>
 							{#each field.options as opt}
 								<option value={opt}>{opt}</option>
 							{/each}
@@ -174,7 +174,7 @@
 					{:else if field.type === 'number'}
 						<input
 							id={field.key}
-							class="***REMOVED***-input"
+							class="admin-input"
 							type="number"
 							bind:value={formData[field.key] as number}
 							required={field.required}
@@ -187,7 +187,7 @@
 					{:else}
 						<input
 							id={field.key}
-							class="***REMOVED***-input"
+							class="admin-input"
 							type="text"
 							bind:value={formData[field.key] as string}
 							required={field.required}
@@ -198,10 +198,10 @@
 			{/each}
 
 			<div class="form-actions">
-				<button class="***REMOVED***-btn ***REMOVED***-btn-primary" type="submit" disabled={saving}>
+				<button class="admin-btn admin-btn-primary" type="submit" disabled={saving}>
 					{saving ? '◈ Saving...' : isEdit ? '→ Update' : '→ Create'}
 				</button>
-				<a href={backHref} class="***REMOVED***-btn">Cancel</a>
+				<a href={backHref} class="admin-btn">Cancel</a>
 			</div>
 		</form>
 	</div>
@@ -215,13 +215,13 @@
 		font-family: var(--font-mono);
 		font-size: 0.75rem;
 		text-transform: uppercase;
-		color: var(--***REMOVED***-ink-muted);
+		color: var(--admin-ink-muted);
 	}
 
 	.loading-box {
 		width: 14px;
 		height: 14px;
-		border: 3px solid var(--***REMOVED***-ink);
+		border: 3px solid var(--admin-ink);
 		animation: spin-box 0.8s linear infinite;
 	}
 
@@ -243,9 +243,9 @@
 		font-weight: 700;
 		text-transform: uppercase;
 		letter-spacing: 1.5px;
-		background: var(--***REMOVED***-blue);
-		border: 3px solid var(--***REMOVED***-ink);
-		box-shadow: 3px 3px 0 0 var(--***REMOVED***-ink);
+		background: var(--admin-blue);
+		border: 3px solid var(--admin-ink);
+		box-shadow: 3px 3px 0 0 var(--admin-ink);
 		padding: 0.15rem 0.45rem;
 	}
 
@@ -264,7 +264,7 @@
 	.bool-toggle input {
 		width: 18px;
 		height: 18px;
-		accent-color: var(--***REMOVED***-ink);
+		accent-color: var(--admin-ink);
 		cursor: pointer;
 	}
 
@@ -279,6 +279,6 @@
 		gap: 0.75rem;
 		margin-top: 0.5rem;
 		padding-top: 1rem;
-		border-top: 2px solid var(--***REMOVED***-ink);
+		border-top: 2px solid var(--admin-ink);
 	}
 </style>

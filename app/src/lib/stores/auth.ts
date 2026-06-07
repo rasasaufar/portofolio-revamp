@@ -1,7 +1,7 @@
 import { writable, derived } from 'svelte/store';
 import { browser } from '$app/environment';
 
-const TOKEN_KEY = 'portfolio_***REMOVED***_token';
+const TOKEN_KEY = 'portfolio_admin_token';
 
 function getStoredToken(): string | null {
 	if (!browser) return null;

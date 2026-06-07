@@ -1,8 +1,8 @@
 <script lang="ts">
-	import FormEditor from '$lib/components/***REMOVED***/FormEditor.svelte';
+	import FormEditor from '$lib/components/admin/FormEditor.svelte';
 </script>
 
-<FormEditor resource="certifications" title="Certifications" backHref="/***REMOVED***/certifications" fields={[
+<FormEditor resource="certifications" title="Certifications" backHref="/admin/certifications" fields={[
 	{ key: 'title', label: 'Title', required: true },
 	{ key: 'issuer', label: 'Issuer', required: true },
 	{ key: 'issued_date', label: 'Issued Date', required: true },

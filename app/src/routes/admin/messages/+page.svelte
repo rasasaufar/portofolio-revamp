@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import { listResource, deleteResource, markMessageRead } from '$lib/api/***REMOVED***';
-	import ConfirmDialog from '$lib/components/***REMOVED***/ConfirmDialog.svelte';
+	import { listResource, deleteResource, markMessageRead } from '$lib/api/admin';
+	import ConfirmDialog from '$lib/components/admin/ConfirmDialog.svelte';
 
 	let messages = $state<Record<string, unknown>[]>([]);
 	let loading = $state(true);
@@ -59,7 +59,7 @@
 	}
 </script>
 
-<div class="***REMOVED***-header">
+<div class="admin-header">
 	<h1>Messages</h1>
 	<span class="msg-count">{messages.filter(m => !m.is_read).length} unread</span>
 </div>
@@ -70,14 +70,14 @@
 		<span>Loading messages...</span>
 	</div>
 {:else if messages.length === 0}
-	<div class="***REMOVED***-card empty-state">
+	<div class="admin-card empty-state">
 		<div class="empty-icon" aria-hidden="true">▪</div>
 		<p class="empty-text">No Messages Yet</p>
 		<p class="empty-hint">Messages from your contact form will appear here.</p>
 	</div>
 {:else}
-	<div class="***REMOVED***-card ***REMOVED***-table-wrap">
-		<table class="***REMOVED***-table">
+	<div class="admin-card admin-table-wrap">
+		<table class="admin-table">
 			<thead><tr><th>Name</th><th>Email</th><th>Message</th><th>Status</th><th>Date</th><th>Actions</th></tr></thead>
 			<tbody>
 				{#each messages as msg}
@@ -89,11 +89,11 @@
 						<td>{msg.name}</td>
 						<td class="msg-email-cell">{msg.email}</td>
 						<td class="msg-preview">{String(msg.message).slice(0, 50)}{String(msg.message).length > 50 ? '...' : ''}</td>
-						<td><span class={`***REMOVED***-badge ${msg.is_read ? '***REMOVED***-badge-published' : '***REMOVED***-badge-draft'}`}>{msg.is_read ? 'Read' : 'Unread'}</span></td>
+						<td><span class={`admin-badge ${msg.is_read ? 'admin-badge-published' : 'admin-badge-draft'}`}>{msg.is_read ? 'Read' : 'Unread'}</span></td>
 						<td class="msg-date">{formatDate(msg.created_at)}</td>
 						<td>
-							<div class="***REMOVED***-actions">
-								<button class="***REMOVED***-btn ***REMOVED***-btn-sm ***REMOVED***-btn-danger" onclick={(e) => { e.stopPropagation(); handleDelete(String(msg.id)); }}>Delete</button>
+							<div class="admin-actions">
+								<button class="admin-btn admin-btn-sm admin-btn-danger" onclick={(e) => { e.stopPropagation(); handleDelete(String(msg.id)); }}>Delete</button>
 							</div>
 						</td>
 					</tr>
@@ -133,9 +133,9 @@
 				</div>
 			</div>
 			<div class="msg-modal-footer">
-				<a href={`mailto:${selectedMessage.email}?subject=Re: Portfolio Contact`} class="***REMOVED***-btn ***REMOVED***-btn-primary">Reply via Email</a>
-				<button class="***REMOVED***-btn ***REMOVED***-btn-danger" onclick={() => { handleDelete(String(selectedMessage?.id)); }}>Delete</button>
-				<button class="***REMOVED***-btn" onclick={closeMessage}>Close</button>
+				<a href={`mailto:${selectedMessage.email}?subject=Re: Portfolio Contact`} class="admin-btn admin-btn-primary">Reply via Email</a>
+				<button class="admin-btn admin-btn-danger" onclick={() => { handleDelete(String(selectedMessage?.id)); }}>Delete</button>
+				<button class="admin-btn" onclick={closeMessage}>Close</button>
 			</div>
 		</div>
 	</div>
@@ -158,9 +158,9 @@
 		font-size: 0.7rem;
 		text-transform: uppercase;
 		letter-spacing: 0.5px;
-		background: var(--***REMOVED***-pink);
-		border: 3px solid var(--***REMOVED***-ink);
-		box-shadow: 3px 3px 0 0 var(--***REMOVED***-ink);
+		background: var(--admin-pink);
+		border: 3px solid var(--admin-ink);
+		box-shadow: 3px 3px 0 0 var(--admin-ink);
 		padding: 0.3rem 0.6rem;
 	}
 
@@ -171,13 +171,13 @@
 		font-family: var(--font-mono);
 		font-size: 0.75rem;
 		text-transform: uppercase;
-		color: var(--***REMOVED***-ink-muted);
+		color: var(--admin-ink-muted);
 	}
 
 	.loading-box {
 		width: 14px;
 		height: 14px;
-		border: 3px solid var(--***REMOVED***-ink);
+		border: 3px solid var(--admin-ink);
 		animation: spin-box 0.8s linear infinite;
 	}
 
@@ -209,7 +209,7 @@
 		font-family: var(--font-mono);
 		font-size: 0.72rem;
 		text-transform: uppercase;
-		color: var(--***REMOVED***-ink-muted);
+		color: var(--admin-ink-muted);
 		margin: 0.5rem 0 0;
 	}
 
@@ -219,7 +219,7 @@
 
 	.msg-row.unread td {
 		font-weight: 600;
-		background: var(--***REMOVED***-soft);
+		background: var(--admin-soft);
 	}
 
 	.msg-email-cell {
@@ -230,7 +230,7 @@
 	.msg-preview {
 		max-width: 200px;
 		font-size: 0.82rem;
-		color: var(--***REMOVED***-ink-muted);
+		color: var(--admin-ink-muted);
 	}
 
 	.msg-date {
@@ -258,9 +258,9 @@
 	}
 
 	.msg-modal {
-		background: var(--***REMOVED***-white);
-		border: 3px solid var(--***REMOVED***-ink);
-		box-shadow: 8px 8px 0 0 var(--***REMOVED***-ink);
+		background: var(--admin-white);
+		border: 3px solid var(--admin-ink);
+		box-shadow: 8px 8px 0 0 var(--admin-ink);
 		width: 100%;
 		max-width: 560px;
 		max-height: 80vh;
@@ -283,9 +283,9 @@
 		font-weight: 700;
 		text-transform: uppercase;
 		letter-spacing: 1.5px;
-		background: var(--***REMOVED***-mint);
-		border: 3px solid var(--***REMOVED***-ink);
-		box-shadow: 3px 3px 0 0 var(--***REMOVED***-ink);
+		background: var(--admin-mint);
+		border: 3px solid var(--admin-ink);
+		box-shadow: 3px 3px 0 0 var(--admin-ink);
 		padding: 0.15rem 0.45rem;
 	}
 
@@ -294,7 +294,7 @@
 		justify-content: space-between;
 		align-items: center;
 		padding: 1.25rem 1.5rem;
-		border-bottom: 3px solid var(--***REMOVED***-ink);
+		border-bottom: 3px solid var(--admin-ink);
 	}
 
 	.msg-modal-header h2 {
@@ -306,9 +306,9 @@
 	}
 
 	.msg-close {
-		background: var(--***REMOVED***-pink);
-		border: 3px solid var(--***REMOVED***-ink);
-		box-shadow: 3px 3px 0 0 var(--***REMOVED***-ink);
+		background: var(--admin-pink);
+		border: 3px solid var(--admin-ink);
+		box-shadow: 3px 3px 0 0 var(--admin-ink);
 		width: 32px;
 		height: 32px;
 		display: grid;
@@ -321,7 +321,7 @@
 
 	.msg-close:hover {
 		transform: translate(-2px, -2px);
-		box-shadow: 5px 5px 0 0 var(--***REMOVED***-ink);
+		box-shadow: 5px 5px 0 0 var(--admin-ink);
 	}
 
 	.msg-modal-body {
@@ -334,7 +334,7 @@
 		gap: 0.55rem;
 		margin-bottom: 1.25rem;
 		padding-bottom: 1.25rem;
-		border-bottom: 2px solid var(--***REMOVED***-ink);
+		border-bottom: 2px solid var(--admin-ink);
 	}
 
 	.msg-meta-row {
@@ -348,7 +348,7 @@
 		font-size: 0.65rem;
 		text-transform: uppercase;
 		letter-spacing: 0.8px;
-		color: var(--***REMOVED***-ink-muted);
+		color: var(--admin-ink-muted);
 		min-width: 50px;
 		font-weight: 700;
 	}
@@ -358,20 +358,20 @@
 	}
 
 	.msg-email-link {
-		color: var(--***REMOVED***-ink);
+		color: var(--admin-ink);
 		text-decoration: none;
-		border-bottom: 2px solid var(--***REMOVED***-yellow);
+		border-bottom: 2px solid var(--admin-yellow);
 		transition: border-color 0.1s;
 	}
 
 	.msg-email-link:hover {
-		border-color: var(--***REMOVED***-ink);
+		border-color: var(--admin-ink);
 	}
 
 	.msg-content {
-		background: var(--***REMOVED***-soft);
-		border: 3px solid var(--***REMOVED***-ink);
-		box-shadow: 3px 3px 0 0 var(--***REMOVED***-ink);
+		background: var(--admin-soft);
+		border: 3px solid var(--admin-ink);
+		box-shadow: 3px 3px 0 0 var(--admin-ink);
 		padding: 1.25rem;
 	}
 
@@ -385,7 +385,7 @@
 		display: flex;
 		gap: 0.6rem;
 		padding: 1.25rem 1.5rem;
-		border-top: 3px solid var(--***REMOVED***-ink);
-		background: var(--***REMOVED***-soft);
+		border-top: 3px solid var(--admin-ink);
+		background: var(--admin-soft);
 	}
 </style>

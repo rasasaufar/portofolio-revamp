@@ -12,13 +12,13 @@ import (
 
 // Run executes the database seed, populating all tables with initial data.
 // It is idempotent — skips insertion if data already exists.
-func Run(pool *pgxpool.Pool, ***REMOVED***Password string) error {
+func Run(pool *pgxpool.Pool, adminPassword string) error {
 	ctx := context.Background()
 
 	log.Println("🌱 Starting database seed...")
 
-	if err := seedAdminUser(ctx, pool, ***REMOVED***Password); err != nil {
-		return fmt.Errorf("seed ***REMOVED*** user: %w", err)
+	if err := seedAdminUser(ctx, pool, adminPassword); err != nil {
+		return fmt.Errorf("seed admin user: %w", err)
 	}
 	if err := seedIdentityConsole(ctx, pool); err != nil {
 		return fmt.Errorf("seed identity console: %w", err)
@@ -78,8 +78,8 @@ func mustJSON(v interface{}) string {
 }
 
 func seedAdminUser(ctx context.Context, pool *pgxpool.Pool, password string) error {
-	if tableHasData(ctx, pool, "***REMOVED***_users") {
-		log.Println("  ⏭️  ***REMOVED***_users already seeded, skipping")
+	if tableHasData(ctx, pool, "admin_users") {
+		log.Println("  ⏭️  admin_users already seeded, skipping")
 		return nil
 	}
 
@@ -90,13 +90,13 @@ func seedAdminUser(ctx context.Context, pool *pgxpool.Pool, password string) err
 	}
 
 	_, err = pool.Exec(ctx,
-		`INSERT INTO ***REMOVED***_users (email, password_hash, name) VALUES ($1, $2, $3)`,
-		"***REMOVED***@portfolio.local", hash, "Admin",
+		`INSERT INTO admin_users (email, password_hash, name) VALUES ($1, $2, $3)`,
+		"***REMOVED***", hash, "Admin",
 	)
 	if err != nil {
 		return err
 	}
-	log.Println("  ✅ ***REMOVED***_users seeded")
+	log.Println("  ✅ admin_users seeded")
 	return nil
 }
 
@@ -171,7 +171,7 @@ func seedImplementationStrengths(ctx context.Context, pool *pgxpool.Pool) error 
 	}{
 		{
 			"Infrastructure Reliability",
-			[]string{"Ubuntu server ***REMOVED***istration", "Production database backup and recovery", "Deployment and post-deployment validation"},
+			[]string{"Ubuntu server administration", "Production database backup and recovery", "Deployment and post-deployment validation"},
 			0,
 		},
 		{
@@ -243,7 +243,7 @@ func seedEducation(ctx context.Context, pool *pgxpool.Pool) error {
 			"Informatics Engineering",
 			"2018", "2022",
 			"3.23",
-			"An ordinary college student who was quite active in university sports, particularly B***REMOVED***ton and Futsal, and managed to successfully graduate on time.",
+			"An ordinary college student who was quite active in university sports, particularly Badminton and Futsal, and managed to successfully graduate on time.",
 			"/images/education/telkom-university-logo.webp",
 			[]string{"Graduated on Time"},
 			0,
@@ -485,7 +485,7 @@ func seedCertifications(ctx context.Context, pool *pgxpool.Pool) error {
 		{"Wawasan Karir dalam Bidang Data Analytics", "Digital Talent Scholarship", "Jul 2025", "2299746850-4500", "Career insights training in Data Analytics delivered through the Digital Talent Scholarship program.", []string{"Data Analytics", "Data Visualization"}, "/images/certificates/dts-logo.png", "additional", 0},
 		{"Pengenalan Data Science dan Pemanfaatannya dalam Berbagai Sektor", "Digital Talent Scholarship", "Jul 2025", "2299818850-4751", "Foundational Data Science training and cross-sector application through the Digital Talent Scholarship program.", []string{"Data Science", "Data Analysis"}, "/images/certificates/dts-logo.png", "additional", 1},
 		{"Keamanan IT: Pertahanan terhadap Kejahatan Digital", "Coursera", "Jul 2024", "TDN7P3MAAEG7", "IT security course under the Google IT Support Specialization.", []string{"Cybersecurity", "Encryption", "Network Security"}, "/images/certificates/coursera-logo.png", "core", 2},
-		{"Administrasi Sistem dan Layanan Infrastruktur TI", "Coursera", "Jul 2024", "RC8NK9PBR5XG", "System ***REMOVED***istration and IT infrastructure services course under the Google IT Support Specialization.", []string{"Server Management", "Directory Services", "IT Infrastructure"}, "/images/certificates/coursera-logo.png", "core", 3},
+		{"Administrasi Sistem dan Layanan Infrastruktur TI", "Coursera", "Jul 2024", "RC8NK9PBR5XG", "System administration and IT infrastructure services course under the Google IT Support Specialization.", []string{"Server Management", "Directory Services", "IT Infrastructure"}, "/images/certificates/coursera-logo.png", "core", 3},
 		{"Sistem Operasi dan Anda: Menjadi Pengguna yang Berdaya", "Coursera", "Jul 2024", "7KU8JRMPQVHJ", "Operating systems course under the Google IT Support Specialization.", []string{"Windows", "Linux", "File Management", "Command Line"}, "/images/certificates/coursera-logo.png", "core", 4},
 		{"Spesialisasi IT Support Google", "Google", "Jul 2024", "YL552W7AGU2G", "Professional certification from Google covering core IT support competencies.", []string{"Cloud Computing", "Computer Networking", "IT Security", "System Administration", "Troubleshooting", "Operating Systems"}, "/images/certificates/google-logo.png", "core", 5},
 		{"Seluk Beluk Jaringan Komputer", "Coursera", "Jun 2024", "2FLPLT9K6MXS", "Computer networking course under the Google IT Support Specialization.", []string{"TCP/IP", "DNS", "DHCP", "Network Troubleshooting"}, "/images/certificates/coursera-logo.png", "core", 6},

@@ -1,8 +1,8 @@
 <script lang="ts">
-	import FormEditor from '$lib/components/***REMOVED***/FormEditor.svelte';
+	import FormEditor from '$lib/components/admin/FormEditor.svelte';
 </script>
 
-<FormEditor resource="projects" title="Projects" backHref="/***REMOVED***/projects" fields={[
+<FormEditor resource="projects" title="Projects" backHref="/admin/projects" fields={[
 	{ key: 'title', label: 'Title', required: true },
 	{ key: 'category', label: 'Category', type: 'select', options: ['Infrastructure', 'UI/UX'], required: true },
 	{ key: 'description', label: 'Description', type: 'textarea' },

@@ -13,7 +13,7 @@ import (
 	"github.com/jackc/pgx/v5/pgxpool"
 )
 
-// AdminHandler handles all ***REMOVED*** CRUD endpoints using a generic approach.
+// AdminHandler handles all admin CRUD endpoints using a generic approach.
 type AdminHandler struct {
 	db *pgxpool.Pool
 }
@@ -120,7 +120,7 @@ var resourceConfigs = map[string]ResourceConfig{
 	},
 }
 
-// DashboardStats handles GET /api/***REMOVED***/dashboard/stats
+// DashboardStats handles GET /api/admin/dashboard/stats
 func (h *AdminHandler) DashboardStats(w http.ResponseWriter, r *http.Request) {
 	ctx, cancel := context.WithTimeout(r.Context(), 10*time.Second)
 	defer cancel()
@@ -158,7 +158,7 @@ func (h *AdminHandler) DashboardStats(w http.ResponseWriter, r *http.Request) {
 	writeJSON(w, http.StatusOK, stats)
 }
 
-// List handles GET /api/***REMOVED***/{resource}
+// List handles GET /api/admin/{resource}
 func (h *AdminHandler) List(w http.ResponseWriter, r *http.Request) {
 	resource := chi.URLParam(r, "resource")
 	cfg, ok := resourceConfigs[resource]
@@ -191,7 +191,7 @@ func (h *AdminHandler) List(w http.ResponseWriter, r *http.Request) {
 	writeJSON(w, http.StatusOK, results)
 }
 
-// GetByID handles GET /api/***REMOVED***/{resource}/{id}
+// GetByID handles GET /api/admin/{resource}/{id}
 func (h *AdminHandler) GetByID(w http.ResponseWriter, r *http.Request) {
 	resource := chi.URLParam(r, "resource")
 	id := chi.URLParam(r, "id")
@@ -227,7 +227,7 @@ func (h *AdminHandler) GetByID(w http.ResponseWriter, r *http.Request) {
 	writeJSON(w, http.StatusOK, results[0])
 }
 
-// Create handles POST /api/***REMOVED***/{resource}
+// Create handles POST /api/admin/{resource}
 func (h *AdminHandler) Create(w http.ResponseWriter, r *http.Request) {
 	resource := chi.URLParam(r, "resource")
 	cfg, ok := resourceConfigs[resource]
@@ -287,7 +287,7 @@ func (h *AdminHandler) Create(w http.ResponseWriter, r *http.Request) {
 	writeJSON(w, http.StatusCreated, map[string]string{"id": newID, "message": "Record created successfully"})
 }
 
-// Update handles PUT /api/***REMOVED***/{resource}/{id}
+// Update handles PUT /api/admin/{resource}/{id}
 func (h *AdminHandler) Update(w http.ResponseWriter, r *http.Request) {
 	resource := chi.URLParam(r, "resource")
 	id := chi.URLParam(r, "id")
@@ -358,7 +358,7 @@ func (h *AdminHandler) Update(w http.ResponseWriter, r *http.Request) {
 	writeJSON(w, http.StatusOK, map[string]string{"message": "Record updated successfully"})
 }
 
-// Delete handles DELETE /api/***REMOVED***/{resource}/{id}
+// Delete handles DELETE /api/admin/{resource}/{id}
 func (h *AdminHandler) Delete(w http.ResponseWriter, r *http.Request) {
 	resource := chi.URLParam(r, "resource")
 	id := chi.URLParam(r, "id")
@@ -387,12 +387,12 @@ func (h *AdminHandler) Delete(w http.ResponseWriter, r *http.Request) {
 	writeJSON(w, http.StatusOK, map[string]string{"message": "Record deleted successfully"})
 }
 
-// Publish handles PATCH /api/***REMOVED***/{resource}/{id}/publish
+// Publish handles PATCH /api/admin/{resource}/{id}/publish
 func (h *AdminHandler) Publish(w http.ResponseWriter, r *http.Request) {
 	h.setPublishState(w, r, true)
 }
 
-// Unpublish handles PATCH /api/***REMOVED***/{resource}/{id}/unpublish
+// Unpublish handles PATCH /api/admin/{resource}/{id}/unpublish
 func (h *AdminHandler) Unpublish(w http.ResponseWriter, r *http.Request) {
 	h.setPublishState(w, r, false)
 }
@@ -429,7 +429,7 @@ func (h *AdminHandler) setPublishState(w http.ResponseWriter, r *http.Request, p
 	writeJSON(w, http.StatusOK, map[string]string{"message": fmt.Sprintf("Record %s successfully", state)})
 }
 
-// Reorder handles PUT /api/***REMOVED***/{resource}/reorder
+// Reorder handles PUT /api/admin/{resource}/reorder
 func (h *AdminHandler) Reorder(w http.ResponseWriter, r *http.Request) {
 	resource := chi.URLParam(r, "resource")
 
@@ -467,7 +467,7 @@ func (h *AdminHandler) Reorder(w http.ResponseWriter, r *http.Request) {
 	writeJSON(w, http.StatusOK, map[string]string{"message": "Reorder successful"})
 }
 
-// MarkRead handles PATCH /api/***REMOVED***/messages/{id}/read
+// MarkRead handles PATCH /api/admin/messages/{id}/read
 func (h *AdminHandler) MarkRead(w http.ResponseWriter, r *http.Request) {
 	id := chi.URLParam(r, "id")
 

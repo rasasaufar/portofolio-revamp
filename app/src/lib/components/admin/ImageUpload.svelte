@@ -80,10 +80,10 @@
 		<div class="image-preview">
 			<img src={value} alt="Preview" />
 			<div class="image-preview-actions">
-				<button type="button" class="***REMOVED***-btn ***REMOVED***-btn-sm ***REMOVED***-btn-danger" onclick={clearImage}>Remove</button>
+				<button type="button" class="admin-btn admin-btn-sm admin-btn-danger" onclick={clearImage}>Remove</button>
 			</div>
 		</div>
-		<input type="text" class="***REMOVED***-input" {value} readonly style="margin-top:0.5rem; font-size:0.72rem; font-family:var(--font-mono); color:var(--***REMOVED***-ink-muted);" />
+		<input type="text" class="admin-input" {value} readonly style="margin-top:0.5rem; font-size:0.72rem; font-family:var(--font-mono); color:var(--admin-ink-muted);" />
 	{:else}
 		<div
 			class="upload-dropzone"
@@ -119,8 +119,8 @@
 
 	.image-preview {
 		position: relative;
-		border: 3px solid var(--***REMOVED***-ink);
-		box-shadow: 3px 3px 0 0 var(--***REMOVED***-ink);
+		border: 3px solid var(--admin-ink);
+		box-shadow: 3px 3px 0 0 var(--admin-ink);
 		overflow: hidden;
 		max-width: 300px;
 	}
@@ -140,19 +140,19 @@
 
 	.upload-dropzone {
 		position: relative;
-		border: 3px dashed var(--***REMOVED***-ink);
+		border: 3px dashed var(--admin-ink);
 		padding: 2rem;
 		text-align: center;
 		cursor: pointer;
 		transition: background 0.12s ease, transform 0.12s ease;
-		background: var(--***REMOVED***-soft);
+		background: var(--admin-soft);
 	}
 
 	.upload-dropzone:hover,
 	.upload-dropzone.drag-over {
-		background: var(--***REMOVED***-yellow);
+		background: var(--admin-yellow);
 		transform: translate(-2px, -2px);
-		box-shadow: 4px 4px 0 0 var(--***REMOVED***-ink);
+		box-shadow: 4px 4px 0 0 var(--admin-ink);
 	}
 
 	.drop-label {
@@ -167,7 +167,7 @@
 		margin: 0.3rem 0 0;
 		font-family: var(--font-mono);
 		font-size: 0.65rem;
-		color: var(--***REMOVED***-ink-muted);
+		color: var(--admin-ink-muted);
 		text-transform: uppercase;
 	}
 
@@ -188,7 +188,7 @@
 	.loading-box {
 		width: 12px;
 		height: 12px;
-		border: 3px solid var(--***REMOVED***-ink);
+		border: 3px solid var(--admin-ink);
 		animation: spin-box 0.8s linear infinite;
 	}
 
@@ -207,7 +207,7 @@
 	.upload-error {
 		font-family: var(--font-mono);
 		font-size: 0.72rem;
-		color: var(--***REMOVED***-danger);
+		color: var(--admin-danger);
 		margin-top: 0.4rem;
 		text-transform: uppercase;
 	}

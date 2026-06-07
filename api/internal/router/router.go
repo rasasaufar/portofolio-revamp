@@ -44,7 +44,7 @@ func New(db *pgxpool.Pool, authService *service.AuthService, corsOrigin string) 
 	healthHandler := handler.NewHealthHandler(db)
 	authHandler := handler.NewAuthHandler(userRepo, authService)
 	publicHandler := handler.NewPublicHandler(db)
-	***REMOVED***Handler := handler.NewAdminHandler(db)
+	adminHandler := handler.NewAdminHandler(db)
 
 	// Serve uploaded files (public)
 	r.Handle("/uploads/*", uploadHandler.ServeFiles())
@@ -85,24 +85,24 @@ func New(db *pgxpool.Pool, authService *service.AuthService, corsOrigin string) 
 		r.Post("/contact/messages", publicHandler.CreateContactMessage)
 
 		// Admin protected routes
-		r.Route("/***REMOVED***", func(r chi.Router) {
+		r.Route("/admin", func(r chi.Router) {
 			r.Use(middleware.JWTAuth(authService))
 
 			// Dashboard
-			r.Get("/dashboard/stats", ***REMOVED***Handler.DashboardStats)
+			r.Get("/dashboard/stats", adminHandler.DashboardStats)
 
 			// Generic CRUD for all resources
-			r.Get("/{resource}", ***REMOVED***Handler.List)
-			r.Post("/{resource}", ***REMOVED***Handler.Create)
-			r.Put("/{resource}/reorder", ***REMOVED***Handler.Reorder)
-			r.Get("/{resource}/{id}", ***REMOVED***Handler.GetByID)
-			r.Put("/{resource}/{id}", ***REMOVED***Handler.Update)
-			r.Delete("/{resource}/{id}", ***REMOVED***Handler.Delete)
-			r.Patch("/{resource}/{id}/publish", ***REMOVED***Handler.Publish)
-			r.Patch("/{resource}/{id}/unpublish", ***REMOVED***Handler.Unpublish)
+			r.Get("/{resource}", adminHandler.List)
+			r.Post("/{resource}", adminHandler.Create)
+			r.Put("/{resource}/reorder", adminHandler.Reorder)
+			r.Get("/{resource}/{id}", adminHandler.GetByID)
+			r.Put("/{resource}/{id}", adminHandler.Update)
+			r.Delete("/{resource}/{id}", adminHandler.Delete)
+			r.Patch("/{resource}/{id}/publish", adminHandler.Publish)
+			r.Patch("/{resource}/{id}/unpublish", adminHandler.Unpublish)
 
 			// Messages specific
-			r.Patch("/messages/{id}/read", ***REMOVED***Handler.MarkRead)
+			r.Patch("/messages/{id}/read", adminHandler.MarkRead)
 		})
 	})
 

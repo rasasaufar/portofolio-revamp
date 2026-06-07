@@ -2,7 +2,7 @@ package models
 
 import "time"
 
-// User represents an ***REMOVED*** user in the system.
+// User represents an admin user in the system.
 type User struct {
 	ID           string    `json:"id"`
 	Email        string    `json:"email"`

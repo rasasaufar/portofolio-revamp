@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import { listResource, deleteResource, publishResource, unpublishResource } from '$lib/api/***REMOVED***';
+	import { listResource, deleteResource, publishResource, unpublishResource } from '$lib/api/admin';
 	import ConfirmDialog from './ConfirmDialog.svelte';
 
 	interface FieldDef {
@@ -14,8 +14,8 @@
 		resource,
 		title,
 		fields,
-		editHref = (id: string) => `/***REMOVED***/${resource}/${id}`,
-		newHref = `/***REMOVED***/${resource}/new`
+		editHref = (id: string) => `/admin/${resource}/${id}`,
+		newHref = `/admin/${resource}/new`
 	}: {
 		resource: string;
 		title: string;
@@ -93,9 +93,9 @@
 	}
 </script>
 
-<div class="***REMOVED***-header">
+<div class="admin-header">
 	<h1>{title}</h1>
-	<a href={newHref} class="***REMOVED***-btn ***REMOVED***-btn-primary">+ Add New</a>
+	<a href={newHref} class="admin-btn admin-btn-primary">+ Add New</a>
 </div>
 
 {#if loading}
@@ -104,14 +104,14 @@
 		<span>Loading records...</span>
 	</div>
 {:else if items.length === 0}
-	<div class="***REMOVED***-card empty-state">
+	<div class="admin-card empty-state">
 		<div class="empty-icon" aria-hidden="true">◇</div>
 		<p class="empty-text">No records found</p>
 		<p class="empty-hint">Click "Add New" to create your first entry.</p>
 	</div>
 {:else}
-	<div class="***REMOVED***-card ***REMOVED***-table-wrap">
-		<table class="***REMOVED***-table">
+	<div class="admin-card admin-table-wrap">
+		<table class="admin-table">
 			<thead>
 				<tr>
 					{#each tableFields.slice(0, 4) as field}
@@ -129,22 +129,22 @@
 						{/each}
 						<td>
 							{#if 'is_published' in item}
-								<span class={`***REMOVED***-badge ${item.is_published ? '***REMOVED***-badge-published' : '***REMOVED***-badge-draft'}`}>
+								<span class={`admin-badge ${item.is_published ? 'admin-badge-published' : 'admin-badge-draft'}`}>
 									{item.is_published ? 'Published' : 'Draft'}
 								</span>
 							{:else}
-								<span class="***REMOVED***-badge ***REMOVED***-badge-published">Active</span>
+								<span class="admin-badge admin-badge-published">Active</span>
 							{/if}
 						</td>
 						<td>
-							<div class="***REMOVED***-actions">
-								<a href={editHref(String(item.id))} class="***REMOVED***-btn ***REMOVED***-btn-sm">Edit</a>
+							<div class="admin-actions">
+								<a href={editHref(String(item.id))} class="admin-btn admin-btn-sm">Edit</a>
 								{#if 'is_published' in item}
-									<button class="***REMOVED***-btn ***REMOVED***-btn-sm" onclick={() => handlePublish(String(item.id), Boolean(item.is_published))}>
+									<button class="admin-btn admin-btn-sm" onclick={() => handlePublish(String(item.id), Boolean(item.is_published))}>
 										{item.is_published ? 'Unpublish' : 'Publish'}
 									</button>
 								{/if}
-								<button class="***REMOVED***-btn ***REMOVED***-btn-sm ***REMOVED***-btn-danger" onclick={() => handleDelete(String(item.id))}>
+								<button class="admin-btn admin-btn-sm admin-btn-danger" onclick={() => handleDelete(String(item.id))}>
 									Delete
 								</button>
 							</div>
@@ -172,7 +172,7 @@
 />
 
 {#if toast}
-	<div class={`***REMOVED***-toast ***REMOVED***-toast-${toast.type}`}>{toast.message}</div>
+	<div class={`admin-toast admin-toast-${toast.type}`}>{toast.message}</div>
 {/if}
 
 <style>
@@ -183,13 +183,13 @@
 		font-family: var(--font-mono);
 		font-size: 0.75rem;
 		text-transform: uppercase;
-		color: var(--***REMOVED***-ink-muted);
+		color: var(--admin-ink-muted);
 	}
 
 	.loading-box {
 		width: 14px;
 		height: 14px;
-		border: 3px solid var(--***REMOVED***-ink);
+		border: 3px solid var(--admin-ink);
 		animation: spin-box 0.8s linear infinite;
 	}
 
@@ -221,7 +221,7 @@
 		font-family: var(--font-mono);
 		font-size: 0.72rem;
 		text-transform: uppercase;
-		color: var(--***REMOVED***-ink-muted);
+		color: var(--admin-ink-muted);
 		margin: 0.5rem 0 0;
 	}
 
@@ -231,6 +231,6 @@
 		font-size: 0.65rem;
 		text-transform: uppercase;
 		letter-spacing: 0.5px;
-		color: var(--***REMOVED***-ink-muted);
+		color: var(--admin-ink-muted);
 	}
 </style>

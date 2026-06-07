@@ -103,7 +103,7 @@ export const portfolioData = {
   capabilityAreas: [
     {
       title: 'Infrastructure Reliability',
-      points: ['Ubuntu server ***REMOVED***istration', 'Production database backup and recovery', 'Deployment and post-deployment validation'],
+      points: ['Ubuntu server administration', 'Production database backup and recovery', 'Deployment and post-deployment validation'],
     },
     {
       title: 'Implementation Delivery',
@@ -149,7 +149,7 @@ export const portfolioData = {
       gpa: '3.23',
       logo: '/images/education/telkom-university-logo.webp',
       description:
-        'An ordinary college student who was quite active in university sports, particularly B***REMOVED***ton and Futsal, and managed to successfully graduate on time.',
+        'An ordinary college student who was quite active in university sports, particularly Badminton and Futsal, and managed to successfully graduate on time.',
       highlights: ['Graduated on Time'],
     },
     {
@@ -486,7 +486,7 @@ export const portfolioData = {
       issuer: 'Coursera',
       year: 'Jul 2024',
       image: '/images/certificates/coursera-logo.png',
-      description: 'System ***REMOVED***istration and IT infrastructure services course under the Google IT Support Specialization.',
+      description: 'System administration and IT infrastructure services course under the Google IT Support Specialization.',
       id: 'RC8NK9PBR5XG',
       skills: ['Server Management', 'Directory Services', 'IT Infrastructure'],
       category: 'core',

@@ -55,9 +55,9 @@
 				<p id="confirm-message">{message}</p>
 			</div>
 			<div class="confirm-footer">
-				<button class="***REMOVED***-btn" onclick={handleCancel}>{cancelText}</button>
+				<button class="admin-btn" onclick={handleCancel}>{cancelText}</button>
 				<button
-					class="***REMOVED***-btn {variant === 'danger' ? '***REMOVED***-btn-danger' : variant === 'warning' ? '***REMOVED***-btn-warning' : '***REMOVED***-btn-primary'}"
+					class="admin-btn {variant === 'danger' ? 'admin-btn-danger' : variant === 'warning' ? 'admin-btn-warning' : 'admin-btn-primary'}"
 					onclick={handleConfirm}
 				>
 					{confirmText}
@@ -86,9 +86,9 @@
 	}
 
 	.confirm-modal {
-		background: var(--***REMOVED***-white);
-		border: 3px solid var(--***REMOVED***-ink);
-		box-shadow: 8px 8px 0 0 var(--***REMOVED***-ink);
+		background: var(--admin-white);
+		border: 3px solid var(--admin-ink);
+		box-shadow: 8px 8px 0 0 var(--admin-ink);
 		width: 100%;
 		max-width: 420px;
 		position: relative;
@@ -105,9 +105,9 @@
 		top: -8px;
 		right: 16px;
 		font-size: 0.85rem;
-		background: var(--***REMOVED***-pink);
-		border: 3px solid var(--***REMOVED***-ink);
-		box-shadow: 3px 3px 0 0 var(--***REMOVED***-ink);
+		background: var(--admin-pink);
+		border: 3px solid var(--admin-ink);
+		box-shadow: 3px 3px 0 0 var(--admin-ink);
 		padding: 0.15rem 0.5rem;
 		line-height: 1;
 	}
@@ -132,7 +132,7 @@
 		margin: 0;
 		font-size: 0.9rem;
 		line-height: 1.5;
-		color: var(--***REMOVED***-ink);
+		color: var(--admin-ink);
 	}
 
 	.confirm-footer {
@@ -140,7 +140,7 @@
 		justify-content: flex-end;
 		gap: 0.6rem;
 		padding: 1rem 1.5rem;
-		border-top: 3px solid var(--***REMOVED***-ink);
-		background: var(--***REMOVED***-soft);
+		border-top: 3px solid var(--admin-ink);
+		background: var(--admin-soft);
 	}
 </style>

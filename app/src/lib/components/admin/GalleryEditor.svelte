@@ -1,5 +1,5 @@
 <script lang="ts">
-	import ImageUpload from '$lib/components/***REMOVED***/ImageUpload.svelte';
+	import ImageUpload from '$lib/components/admin/ImageUpload.svelte';
 
 	interface GalleryItem {
 		image: string;
@@ -66,7 +66,7 @@
 				<span class="gallery-label">Caption</span>
 				<input
 					type="text"
-					class="***REMOVED***-input"
+					class="admin-input"
 					placeholder="Caption"
 					value={item.caption}
 					oninput={(e) => updateField(index, 'caption', (e.target as HTMLInputElement).value)}
@@ -76,7 +76,7 @@
 			<div class="gallery-field">
 				<span class="gallery-label">Description</span>
 				<textarea
-					class="***REMOVED***-input"
+					class="admin-input"
 					placeholder="Description"
 					value={item.description}
 					oninput={(e) => updateField(index, 'description', (e.target as HTMLTextAreaElement).value)}
@@ -86,7 +86,7 @@
 		</div>
 	{/each}
 
-	<button type="button" class="***REMOVED***-btn ***REMOVED***-btn-sm ***REMOVED***-btn-primary" onclick={addItem}>+ Add Gallery Item</button>
+	<button type="button" class="admin-btn admin-btn-sm admin-btn-primary" onclick={addItem}>+ Add Gallery Item</button>
 </div>
 
 <style>
@@ -97,9 +97,9 @@
 	}
 
 	.gallery-card {
-		background: var(--***REMOVED***-soft);
-		border: 3px solid var(--***REMOVED***-ink);
-		box-shadow: 3px 3px 0 0 var(--***REMOVED***-ink);
+		background: var(--admin-soft);
+		border: 3px solid var(--admin-ink);
+		box-shadow: 3px 3px 0 0 var(--admin-ink);
 		padding: 1rem;
 	}
 
@@ -109,7 +109,7 @@
 		align-items: center;
 		margin-bottom: 0.75rem;
 		padding-bottom: 0.5rem;
-		border-bottom: 2px solid var(--***REMOVED***-ink);
+		border-bottom: 2px solid var(--admin-ink);
 	}
 
 	.gallery-card-num {
@@ -117,13 +117,13 @@
 		font-size: 0.68rem;
 		text-transform: uppercase;
 		letter-spacing: 0.5px;
-		color: var(--***REMOVED***-ink-muted);
+		color: var(--admin-ink-muted);
 	}
 
 	.gallery-remove {
-		background: var(--***REMOVED***-pink);
-		border: 2px solid var(--***REMOVED***-ink);
-		box-shadow: 2px 2px 0 0 var(--***REMOVED***-ink);
+		background: var(--admin-pink);
+		border: 2px solid var(--admin-ink);
+		box-shadow: 2px 2px 0 0 var(--admin-ink);
 		width: 26px;
 		height: 26px;
 		cursor: pointer;
@@ -137,7 +137,7 @@
 
 	.gallery-remove:hover {
 		transform: translate(-1px, -1px);
-		box-shadow: 3px 3px 0 0 var(--***REMOVED***-ink);
+		box-shadow: 3px 3px 0 0 var(--admin-ink);
 	}
 
 	.gallery-field {
@@ -150,7 +150,7 @@
 		font-size: 0.65rem;
 		text-transform: uppercase;
 		letter-spacing: 0.8px;
-		color: var(--***REMOVED***-ink-muted);
+		color: var(--admin-ink-muted);
 		margin-bottom: 0.3rem;
 		font-weight: 700;
 	}

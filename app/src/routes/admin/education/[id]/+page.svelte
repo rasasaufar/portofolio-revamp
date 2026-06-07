@@ -1,10 +1,10 @@
 <script lang="ts">
 	import { page } from '$app/stores';
-	import FormEditor from '$lib/components/***REMOVED***/FormEditor.svelte';
+	import FormEditor from '$lib/components/admin/FormEditor.svelte';
 	const id = $derived($page.params.id);
 </script>
 
-<FormEditor resource="education" {id} title="Education" backHref="/***REMOVED***/education" fields={[
+<FormEditor resource="education" {id} title="Education" backHref="/admin/education" fields={[
 	{ key: 'institution_name', label: 'Institution Name', required: true },
 	{ key: 'degree', label: 'Degree', required: true },
 	{ key: 'major', label: 'Major' },

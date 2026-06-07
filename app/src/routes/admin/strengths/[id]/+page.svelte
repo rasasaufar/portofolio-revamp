@@ -1,10 +1,10 @@
 <script lang="ts">
 	import { page } from '$app/stores';
-	import FormEditor from '$lib/components/***REMOVED***/FormEditor.svelte';
+	import FormEditor from '$lib/components/admin/FormEditor.svelte';
 	const id = $derived($page.params.id);
 </script>
 
-<FormEditor resource="strengths" {id} title="Implementation Strengths" backHref="/***REMOVED***/strengths" fields={[
+<FormEditor resource="strengths" {id} title="Implementation Strengths" backHref="/admin/strengths" fields={[
 	{ key: 'title', label: 'Title', required: true },
 	{ key: 'description', label: 'Description', type: 'textarea' },
 	{ key: 'bullet_points', label: 'Bullet Points', type: 'tags', placeholder: 'Add point...' },

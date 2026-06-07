@@ -2,7 +2,7 @@
 
 ## Overview
 
-This document details the implementation plan for transforming the static SvelteKit portfolio into a dynamic system with a Go backend, PostgreSQL database, and ***REMOVED*** panel. The public-facing portfolio retains its current futuristic/identity console design but sources all content from a REST API. A protected ***REMOVED*** panel enables full content management (CRUD, publish/unpublish, reorder) for all portfolio sections. The project is restructured into `app/` (SvelteKit frontend) and `api/` (Go backend).
+This document details the implementation plan for transforming the static SvelteKit portfolio into a dynamic system with a Go backend, PostgreSQL database, and admin panel. The public-facing portfolio retains its current futuristic/identity console design but sources all content from a REST API. A protected admin panel enables full content management (CRUD, publish/unpublish, reorder) for all portfolio sections. The project is restructured into `app/` (SvelteKit frontend) and `api/` (Go backend).
 
 ### Technical Decisions
 
@@ -20,8 +20,8 @@ This document details the implementation plan for transforming the static Svelte
 - **Adapter**: `@sveltejs/adapter-node` for SSR deployment
 - **API client**: Fetch-based wrapper in `$lib/api/` with automatic JWT header injection
 - **Auth state**: Svelte store backed by localStorage for JWT persistence
-- **Admin routing**: SvelteKit file-based routing under `src/routes/***REMOVED***/`
-- **Styling**: Existing `neo-brutalism.css` for public, new `***REMOVED***.css` for ***REMOVED*** panel
+- **Admin routing**: SvelteKit file-based routing under `src/routes/admin/`
+- **Styling**: Existing `neo-brutalism.css` for public, new `admin.css` for admin panel
 - **Form handling**: Client-side validation with Svelte reactive statements
 - **Supabase removal**: Remove `@supabase/supabase-js` dependency; contact form uses Go API
 
@@ -68,7 +68,7 @@ This document details the implementation plan for transforming the static Svelte
 
 **Phase 2: Backend Foundation** — Config, DB connection, health endpoint, migrations, seed, auth service
 
-**Phase 3: Backend CRUD** — Models, repositories, public GET handlers, ***REMOVED*** CRUD handlers, contact messages
+**Phase 3: Backend CRUD** — Models, repositories, public GET handlers, admin CRUD handlers, contact messages
 
 **Phase 4: Frontend Public Integration** — API client, dynamic data fetching, loading/error states, remove Supabase
 
@@ -88,10 +88,10 @@ portfolio-svelte/
 │   │   │   ├── api/
 │   │   │   │   ├── client.ts          # Base HTTP client with auth headers
 │   │   │   │   ├── public.ts          # Public API calls
-│   │   │   │   └── ***REMOVED***.ts           # Admin API calls (CRUD helpers)
+│   │   │   │   └── admin.ts           # Admin API calls (CRUD helpers)
 │   │   │   ├── components/
 │   │   │   │   ├── public/            # Existing public components (refactored)
-│   │   │   │   └── ***REMOVED***/
+│   │   │   │   └── admin/
 │   │   │   │       ├── Sidebar.svelte
 │   │   │   │       ├── DashboardCard.svelte
 │   │   │   │       ├── DataTable.svelte
@@ -104,22 +104,22 @@ portfolio-svelte/
 │   │   │   │   └── toast.ts           # Toast notification store
 │   │   │   ├── types/
 │   │   │   │   ├── portfolio.ts       # Public data types
-│   │   │   │   └── ***REMOVED***.ts           # Admin-specific types
+│   │   │   │   └── admin.ts           # Admin-specific types
 │   │   │   ├── utils/
 │   │   │   │   ├── validation.ts      # Form validation helpers
 │   │   │   │   └── format.ts          # Date/text formatting
 │   │   │   ├── styles/
 │   │   │   │   ├── neo-brutalism.css  # Existing public styles
-│   │   │   │   └── ***REMOVED***.css          # Admin panel styles
+│   │   │   │   └── admin.css          # Admin panel styles
 │   │   │   ├── assets/
 │   │   │   │   └── favicon.svg
 │   │   │   └── index.ts
 │   │   ├── routes/
 │   │   │   ├── +layout.svelte         # Public layout (existing)
 │   │   │   ├── +page.svelte           # Public portfolio (modified to fetch API)
-│   │   │   └── ***REMOVED***/
+│   │   │   └── admin/
 │   │   │       ├── +layout.svelte     # Admin layout with sidebar
-│   │   │       ├── +page.svelte       # Redirect to /***REMOVED***/dashboard
+│   │   │       ├── +page.svelte       # Redirect to /admin/dashboard
 │   │   │       ├── login/+page.svelte
 │   │   │       ├── dashboard/+page.svelte
 │   │   │       ├── identity/          # List, new, [id] pages
@@ -157,7 +157,7 @@ portfolio-svelte/
 │   │   │   ├── auth.go
 │   │   │   ├── health.go
 │   │   │   ├── public.go             # All public GET handlers
-│   │   │   └── ***REMOVED***.go              # All ***REMOVED*** CRUD handlers
+│   │   │   └── admin.go              # All admin CRUD handlers
 │   │   ├── service/
 │   │   │   └── auth_service.go       # JWT generation/validation, bcrypt
 │   │   └── router/router.go          # Chi router setup with all routes
@@ -179,8 +179,8 @@ portfolio-svelte/
 
 | Method | Endpoint | Description |
 |--------|----------|-------------|
-| POST | /api/auth/login | Authenticate ***REMOVED***, return JWT |
-| GET | /api/auth/me | Get current ***REMOVED*** profile (protected) |
+| POST | /api/auth/login | Authenticate admin, return JWT |
+| GET | /api/auth/me | Get current admin profile (protected) |
 
 #### Public Endpoints (No auth required)
 
@@ -205,27 +205,27 @@ For each resource (identity, capabilities, strengths, dossier, education, experi
 
 | Method | Endpoint | Description |
 |--------|----------|-------------|
-| GET | /api/***REMOVED***/{resource} | List all records (including unpublished) |
-| GET | /api/***REMOVED***/{resource}/{id} | Get single record by ID |
-| POST | /api/***REMOVED***/{resource} | Create new record |
-| PUT | /api/***REMOVED***/{resource}/{id} | Update record |
-| DELETE | /api/***REMOVED***/{resource}/{id} | Delete record |
-| PATCH | /api/***REMOVED***/{resource}/{id}/publish | Set is_published = true |
-| PATCH | /api/***REMOVED***/{resource}/{id}/unpublish | Set is_published = false |
-| PUT | /api/***REMOVED***/{resource}/reorder | Update order_number for all items |
+| GET | /api/admin/{resource} | List all records (including unpublished) |
+| GET | /api/admin/{resource}/{id} | Get single record by ID |
+| POST | /api/admin/{resource} | Create new record |
+| PUT | /api/admin/{resource}/{id} | Update record |
+| DELETE | /api/admin/{resource}/{id} | Delete record |
+| PATCH | /api/admin/{resource}/{id}/publish | Set is_published = true |
+| PATCH | /api/admin/{resource}/{id}/unpublish | Set is_published = false |
+| PUT | /api/admin/{resource}/reorder | Update order_number for all items |
 
-Additional ***REMOVED*** endpoints:
+Additional admin endpoints:
 
 | Method | Endpoint | Description |
 |--------|----------|-------------|
-| GET | /api/***REMOVED***/messages | List all contact messages |
-| GET | /api/***REMOVED***/messages/{id} | Get single message |
-| PATCH | /api/***REMOVED***/messages/{id}/read | Mark message as read |
-| DELETE | /api/***REMOVED***/messages/{id} | Delete message |
-| GET | /api/***REMOVED***/messages/unread-count | Get unread message count |
-| GET | /api/***REMOVED***/settings | Get full site settings |
-| PUT | /api/***REMOVED***/settings | Update site settings |
-| GET | /api/***REMOVED***/dashboard/stats | Get record counts for dashboard |
+| GET | /api/admin/messages | List all contact messages |
+| GET | /api/admin/messages/{id} | Get single message |
+| PATCH | /api/admin/messages/{id}/read | Mark message as read |
+| DELETE | /api/admin/messages/{id} | Delete message |
+| GET | /api/admin/messages/unread-count | Get unread message count |
+| GET | /api/admin/settings | Get full site settings |
+| PUT | /api/admin/settings | Update site settings |
+| GET | /api/admin/dashboard/stats | Get record counts for dashboard |
 
 #### Health
 
@@ -235,7 +235,7 @@ Additional ***REMOVED*** endpoints:
 
 ## Data Models
 
-### ***REMOVED***_users
+### admin_users
 
 | Column | Type | Constraints |
 |--------|------|-------------|
@@ -447,19 +447,19 @@ Additional ***REMOVED*** endpoints:
 
 ### Property 1: Round-trip data integrity
 
-*For any* valid content record created via the ***REMOVED*** API (POST), retrieving that record via the corresponding public or ***REMOVED*** GET endpoint should return all field values identical to what was submitted, without loss or corruption.
+*For any* valid content record created via the admin API (POST), retrieving that record via the corresponding public or admin GET endpoint should return all field values identical to what was submitted, without loss or corruption.
 
 **Validates: Requirements 6.1, 11.2, 12.3**
 
 ### Property 2: Auth isolation
 
-*For any* ***REMOVED*** API endpoint and any request without a valid JWT token (missing, expired, or malformed), the backend should return a 401 Unauthorized response. Conversely, for any request with a valid non-expired JWT token, the backend should grant access and not return 401.
+*For any* admin API endpoint and any request without a valid JWT token (missing, expired, or malformed), the backend should return a 401 Unauthorized response. Conversely, for any request with a valid non-expired JWT token, the backend should grant access and not return 401.
 
 **Validates: Requirements 4.1, 4.2, 4.3, 4.4, 6.6**
 
 ### Property 3: Publish filtering
 
-*For any* set of content records with mixed `is_published` values, the corresponding public GET endpoint should return only records where `is_published` is true, and the ***REMOVED*** GET endpoint should return all records regardless of publish status.
+*For any* set of content records with mixed `is_published` values, the corresponding public GET endpoint should return only records where `is_published` is true, and the admin GET endpoint should return all records regardless of publish status.
 
 **Validates: Requirements 5.2, 6.4**
 
@@ -477,13 +477,13 @@ Additional ***REMOVED*** endpoints:
 
 ### Property 6: Password security
 
-*For any* ***REMOVED*** user stored in the database, the password_hash field should be a valid bcrypt hash with cost factor ≥ 10, and the GET /api/auth/me endpoint should never include the password_hash field in its response.
+*For any* admin user stored in the database, the password_hash field should be a valid bcrypt hash with cost factor ≥ 10, and the GET /api/auth/me endpoint should never include the password_hash field in its response.
 
 **Validates: Requirements 4.5, 4.6**
 
 ### Property 7: Input validation
 
-*For any* create or update request to an ***REMOVED*** CRUD endpoint with missing or invalid required fields, the backend should return a 400 Bad Request response with validation error details, and the database should remain unchanged.
+*For any* create or update request to an admin CRUD endpoint with missing or invalid required fields, the backend should return a 400 Bad Request response with validation error details, and the database should remain unchanged.
 
 **Validates: Requirements 5.3, 5.4, 6.2**
 
@@ -555,7 +555,7 @@ This feature uses both unit tests and property-based tests for comprehensive cov
 
 - **Library**: Go — `pgregory.net/rapid` (fast, idiomatic Go PBT library)
 - **Minimum iterations**: 100 per property test
-- **Tag format**: `Feature: dynamic-portfolio-***REMOVED***, Property {N}: {property_text}`
+- **Tag format**: `Feature: dynamic-portfolio-admin, Property {N}: {property_text}`
 
 ### Test Organization
 
@@ -565,7 +565,7 @@ api/
 │   ├── handler/
 │   │   ├── auth_test.go          # Auth handler unit + property tests
 │   │   ├── public_test.go        # Public handler tests
-│   │   └── ***REMOVED***_test.go         # Admin CRUD handler tests
+│   │   └── admin_test.go         # Admin CRUD handler tests
 │   ├── repository/
 │   │   └── *_repo_test.go        # Repository integration tests
 │   ├── service/

@@ -1,10 +1,10 @@
 <script lang="ts">
 	import { page } from '$app/stores';
-	import FormEditor from '$lib/components/***REMOVED***/FormEditor.svelte';
+	import FormEditor from '$lib/components/admin/FormEditor.svelte';
 	const id = $derived($page.params.id);
 </script>
 
-<FormEditor resource="contact" {id} title="Contact Info" backHref="/***REMOVED***/contact" fields={[
+<FormEditor resource="contact" {id} title="Contact Info" backHref="/admin/contact" fields={[
 	{ key: 'email', label: 'Email' },
 	{ key: 'phone', label: 'Phone' },
 	{ key: 'whatsapp_url', label: 'WhatsApp URL' },

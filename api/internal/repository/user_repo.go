@@ -9,7 +9,7 @@ import (
 	"github.com/portfolio/api/internal/models"
 )
 
-// UserRepository handles database operations for ***REMOVED*** users.
+// UserRepository handles database operations for admin users.
 type UserRepository struct {
 	db *pgxpool.Pool
 }
@@ -25,7 +25,7 @@ func (r *UserRepository) FindByEmail(ctx context.Context, email string) (*models
 	user := &models.User{}
 	err := r.db.QueryRow(ctx,
 		`SELECT id, email, password_hash, name, created_at, updated_at
-		FROM ***REMOVED***_users WHERE email = $1`,
+		FROM admin_users WHERE email = $1`,
 		email,
 	).Scan(&user.ID, &user.Email, &user.PasswordHash, &user.Name, &user.CreatedAt, &user.UpdatedAt)
 	if err != nil {
@@ -39,7 +39,7 @@ func (r *UserRepository) FindByID(ctx context.Context, id string) (*models.User,
 	user := &models.User{}
 	err := r.db.QueryRow(ctx,
 		`SELECT id, email, password_hash, name, created_at, updated_at
-		FROM ***REMOVED***_users WHERE id = $1`,
+		FROM admin_users WHERE id = $1`,
 		id,
 	).Scan(&user.ID, &user.Email, &user.PasswordHash, &user.Name, &user.CreatedAt, &user.UpdatedAt)
 	if err != nil {
@@ -51,7 +51,7 @@ func (r *UserRepository) FindByID(ctx context.Context, id string) (*models.User,
 // UpdatePassword updates the password hash for a user.
 func (r *UserRepository) UpdatePassword(ctx context.Context, id, passwordHash string) error {
 	_, err := r.db.Exec(ctx,
-		`UPDATE ***REMOVED***_users SET password_hash = $1, updated_at = $2 WHERE id = $3`,
+		`UPDATE admin_users SET password_hash = $1, updated_at = $2 WHERE id = $3`,
 		passwordHash, time.Now(), id,
 	)
 	if err != nil {
@@ -63,7 +63,7 @@ func (r *UserRepository) UpdatePassword(ctx context.Context, id, passwordHash st
 // UpdateProfile updates the name and email for a user.
 func (r *UserRepository) UpdateProfile(ctx context.Context, id, name, email string) error {
 	_, err := r.db.Exec(ctx,
-		`UPDATE ***REMOVED***_users SET name = $1, email = $2, updated_at = $3 WHERE id = $4`,
+		`UPDATE admin_users SET name = $1, email = $2, updated_at = $3 WHERE id = $4`,
 		name, email, time.Now(), id,
 	)
 	if err != nil {

@@ -9,7 +9,7 @@
 ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-4169E1?style=for-the-badge&logo=postgresql&logoColor=white)
 ![Nginx](https://img.shields.io/badge/Nginx-009639?style=for-the-badge&logo=nginx&logoColor=white)
 
-**Portfolio Revamp** is a personal portfolio website and project showcase built with SvelteKit and Go, featuring a dynamic ***REMOVED*** dashboard for managing projects, certifications, work experience, and education records.
+**Portfolio Revamp** is a personal portfolio website and project showcase built with SvelteKit and Go, featuring a dynamic admin dashboard for managing projects, certifications, work experience, and education records.
 
 Production domain: [rasasaufar.site](https://rasasaufar.site), secured with Cloudflare SSL Full Strict.
 
@@ -19,7 +19,7 @@ Production domain: [rasasaufar.site](https://rasasaufar.site), secured with Clou
 Display portfolio projects with clear descriptions, technologies used, images, and links. The showcase is designed to make each project easy to scan while still giving enough context for visitors to understand the work.
 
 **Certification management**  
-Add, edit, and delete professional certifications from the ***REMOVED*** dashboard. Certification records can be organized as part of the public portfolio to highlight verified learning, achievements, and industry credentials.
+Add, edit, and delete professional certifications from the admin dashboard. Certification records can be organized as part of the public portfolio to highlight verified learning, achievements, and industry credentials.
 
 **Work experience timeline**  
 Manage work history entries in a structured timeline format. Each entry can capture role details, company information, dates, descriptions, and supporting highlights.
@@ -28,7 +28,7 @@ Manage work history entries in a structured timeline format. Each entry can capt
 Track educational background in a dedicated content area. Education entries help present academic history alongside project work and professional experience.
 
 **Admin dashboard**  
-Secure JWT-authenticated ***REMOVED*** panel for CRUD operations across portfolio content. The dashboard centralizes content management for projects, certifications, work experience, education records, and other site data.
+Secure JWT-authenticated admin panel for CRUD operations across portfolio content. The dashboard centralizes content management for projects, certifications, work experience, education records, and other site data.
 
 **File uploads**  
 Support for uploading project images, avatars, and other visual assets used across the portfolio. Uploaded files can be managed through backend services and displayed on the frontend.
@@ -172,7 +172,7 @@ Screenshots can be added here as the interface evolves.
 |---|---|
 | Homepage | `docs/screenshots/homepage.png` |
 | Project Showcase | `docs/screenshots/projects.png` |
-| Admin Dashboard | `docs/screenshots/***REMOVED***-dashboard.png` |
+| Admin Dashboard | `docs/screenshots/admin-dashboard.png` |
 | Content Editor | `docs/screenshots/content-editor.png` |
 
 ## 🤝 Contributing

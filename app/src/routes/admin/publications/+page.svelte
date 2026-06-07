@@ -1,5 +1,5 @@
 <script lang="ts">
-	import CrudPage from '$lib/components/***REMOVED***/CrudPage.svelte';
+	import CrudPage from '$lib/components/admin/CrudPage.svelte';
 </script>
 
 <CrudPage

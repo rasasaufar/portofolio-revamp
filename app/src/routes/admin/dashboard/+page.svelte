@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import { getDashboardStats } from '$lib/api/***REMOVED***';
+	import { getDashboardStats } from '$lib/api/admin';
 
 	let stats = $state<Record<string, number>>({});
 	let loading = $state(true);
@@ -21,18 +21,18 @@
 	};
 
 	const statLinks: Record<string, string> = {
-		identity: '/***REMOVED***/identity',
-		capabilities: '/***REMOVED***/capabilities',
-		strengths: '/***REMOVED***/strengths',
-		dossier: '/***REMOVED***/dossier',
-		education: '/***REMOVED***/education',
-		experiences: '/***REMOVED***/experiences',
-		projects: '/***REMOVED***/projects',
-		certifications: '/***REMOVED***/certifications',
-		publications: '/***REMOVED***/publications',
-		contact: '/***REMOVED***/contact',
-		messages: '/***REMOVED***/messages',
-		unread_messages: '/***REMOVED***/messages'
+		identity: '/admin/identity',
+		capabilities: '/admin/capabilities',
+		strengths: '/admin/strengths',
+		dossier: '/admin/dossier',
+		education: '/admin/education',
+		experiences: '/admin/experiences',
+		projects: '/admin/projects',
+		certifications: '/admin/certifications',
+		publications: '/admin/publications',
+		contact: '/admin/contact',
+		messages: '/admin/messages',
+		unread_messages: '/admin/messages'
 	};
 
 	onMount(async () => {
@@ -50,7 +50,7 @@
 	}
 </script>
 
-<div class="***REMOVED***-header">
+<div class="admin-header">
 	<h1>Dashboard</h1>
 	<div class="header-greeting">
 		<span class="greeting-text">{getGreeting()}</span>
@@ -64,9 +64,9 @@
 		<span>Loading stats...</span>
 	</div>
 {:else}
-	<div class="***REMOVED***-stats-grid">
+	<div class="admin-stats-grid">
 		{#each Object.entries(stats) as [key, value], index}
-			<a href={statLinks[key] ?? '#'} class="***REMOVED***-stat-card" style="--i:{index}">
+			<a href={statLinks[key] ?? '#'} class="admin-stat-card" style="--i:{index}">
 				<div class="stat-value">{value}</div>
 				<div class="stat-label">{statLabels[key] ?? key}</div>
 				<div class="stat-corner" aria-hidden="true"></div>
@@ -105,7 +105,7 @@
 		font-size: 0.65rem;
 		text-transform: uppercase;
 		letter-spacing: 0.5px;
-		color: var(--***REMOVED***-ink-muted);
+		color: var(--admin-ink-muted);
 	}
 
 	.loading-state {
@@ -115,13 +115,13 @@
 		font-family: var(--font-mono);
 		font-size: 0.75rem;
 		text-transform: uppercase;
-		color: var(--***REMOVED***-ink-muted);
+		color: var(--admin-ink-muted);
 	}
 
 	.loading-box {
 		width: 14px;
 		height: 14px;
-		border: 3px solid var(--***REMOVED***-ink);
+		border: 3px solid var(--admin-ink);
 		animation: spin-box 0.8s linear infinite;
 	}
 
@@ -130,7 +130,7 @@
 		to { transform: rotate(360deg); }
 	}
 
-	.***REMOVED***-stats-grid {
+	.admin-stats-grid {
 		animation: grid-enter 0.4s ease forwards;
 	}
 
@@ -139,7 +139,7 @@
 		to { opacity: 1; transform: translateY(0); }
 	}
 
-	.***REMOVED***-stat-card {
+	.admin-stat-card {
 		text-decoration: none;
 		color: inherit;
 		animation: card-pop 0.3s ease forwards;
@@ -158,7 +158,7 @@
 		right: 6px;
 		width: 10px;
 		height: 10px;
-		border: 2px solid var(--***REMOVED***-ink);
+		border: 2px solid var(--admin-ink);
 		opacity: 0.4;
 	}
 
@@ -167,9 +167,9 @@
 	}
 
 	.footer-strip {
-		border: var(--***REMOVED***-border);
-		box-shadow: var(--***REMOVED***-shadow-sm);
-		background: var(--***REMOVED***-white);
+		border: var(--admin-border);
+		box-shadow: var(--admin-shadow-sm);
+		background: var(--admin-white);
 		padding: 0.55rem 0.85rem;
 		display: flex;
 		align-items: center;
@@ -178,7 +178,7 @@
 		font-size: 0.65rem;
 		text-transform: uppercase;
 		letter-spacing: 0.8px;
-		color: var(--***REMOVED***-ink-muted);
+		color: var(--admin-ink-muted);
 		overflow: hidden;
 		white-space: nowrap;
 	}

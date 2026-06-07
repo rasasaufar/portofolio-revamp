@@ -6,7 +6,7 @@
 	let { children, data } = $props();
 	const year = new Date().getFullYear();
 
-	const isAdmin = $derived($page.url.pathname.startsWith('/***REMOVED***'));
+	const isAdmin = $derived($page.url.pathname.startsWith('/admin'));
 	const isMaintenanceMode = $derived(!isAdmin && data?.siteSettings?.maintenance_mode === true);
 
 	const siteTitle = $derived(data?.siteSettings?.site_title || 'Rasas Aufar - IT Implementation Portfolio');

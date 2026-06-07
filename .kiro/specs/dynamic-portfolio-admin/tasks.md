@@ -2,7 +2,7 @@
 
 ## Overview
 
-Transform the existing static SvelteKit portfolio into a dynamic system with a Go backend (chi router, pgx, JWT auth), PostgreSQL database, and an ***REMOVED*** panel. The project is restructured into `app/` (SvelteKit frontend) and `api/` (Go backend). Implementation follows an incremental approach: project restructure → backend foundation → models/repositories → handlers → seed data → frontend API client → public portfolio integration → ***REMOVED*** panel → validation/polish → documentation.
+Transform the existing static SvelteKit portfolio into a dynamic system with a Go backend (chi router, pgx, JWT auth), PostgreSQL database, and an admin panel. The project is restructured into `app/` (SvelteKit frontend) and `api/` (Go backend). Implementation follows an incremental approach: project restructure → backend foundation → models/repositories → handlers → seed data → frontend API client → public portfolio integration → admin panel → validation/polish → documentation.
 
 ## Tasks
 
@@ -33,7 +33,7 @@ Transform the existing static SvelteKit portfolio into a dynamic system with a G
     - _Requirements: 1.2_
   - [ ] 2.3 Create `api/internal/database/migrate.go` with file-based migration runner that executes SQL files in order
     - _Requirements: 2.1_
-  - [ ] 2.4 Create migration file `001_create_***REMOVED***_users.sql`
+  - [ ] 2.4 Create migration file `001_create_admin_users.sql`
     - _Requirements: 2.2_
   - [ ] 2.5 Create migration file `002_create_identity_console.sql`
     - Include order_number, is_published, created_at, updated_at columns
@@ -130,18 +130,18 @@ Transform the existing static SvelteKit portfolio into a dynamic system with a G
   - [ ] 5.2 Create public POST /api/contact/messages handler with request validation
     - Validate name, email, message fields; return 400 for invalid input
     - _Requirements: 5.3, 5.4_
-  - [ ] 5.3 Create `api/internal/handler/***REMOVED***.go` with ***REMOVED*** CRUD handlers for identity section (list all, get by ID, create, update, delete, publish, unpublish, reorder)
+  - [ ] 5.3 Create `api/internal/handler/admin.go` with admin CRUD handlers for identity section (list all, get by ID, create, update, delete, publish, unpublish, reorder)
     - Validate required fields on create/update
     - _Requirements: 6.1, 6.2, 6.3, 6.4, 6.5_
-  - [ ] 5.4 Add ***REMOVED*** CRUD handlers for capabilities, strengths, dossier, education, experiences, projects, certifications, publications, contact-info sections
+  - [ ] 5.4 Add admin CRUD handlers for capabilities, strengths, dossier, education, experiences, projects, certifications, publications, contact-info sections
     - _Requirements: 6.1, 6.2, 6.3, 6.4, 6.5_
-  - [ ] 5.5 Create ***REMOVED*** message handlers (list, get, mark read, delete, unread count)
+  - [ ] 5.5 Create admin message handlers (list, get, mark read, delete, unread count)
     - _Requirements: 10.1, 10.2, 10.3_
-  - [ ] 5.6 Create ***REMOVED*** settings handlers (get, update)
+  - [ ] 5.6 Create admin settings handlers (get, update)
     - _Requirements: 11.1, 11.2_
-  - [ ] 5.7 Create ***REMOVED*** dashboard stats handler (GET /api/***REMOVED***/dashboard/stats returning record counts)
+  - [ ] 5.7 Create admin dashboard stats handler (GET /api/admin/dashboard/stats returning record counts)
     - _Requirements: 8.3_
-  - [ ] 5.8 Register all new handlers in router.go with appropriate middleware (public routes open, ***REMOVED*** routes behind JWT middleware)
+  - [ ] 5.8 Register all new handlers in router.go with appropriate middleware (public routes open, admin routes behind JWT middleware)
     - _Requirements: 6.6_
 
 - [ ] 6. Checkpoint - Backend CRUD verification
@@ -174,7 +174,7 @@ Transform the existing static SvelteKit portfolio into a dynamic system with a G
 - [ ] 7. Seed Data
   - [ ] 7.1 Create `api/seeds/seed.go` with seed function that populates all tables from existing portfolio.ts data
     - _Requirements: 3.1_
-  - [ ] 7.2 Include default ***REMOVED*** user creation (***REMOVED***@portfolio.local) with bcrypt-hashed password from ADMIN_DEFAULT_PASSWORD env var
+  - [ ] 7.2 Include default admin user creation (***REMOVED***) with bcrypt-hashed password from ADMIN_DEFAULT_PASSWORD env var
     - _Requirements: 3.2_
   - [ ] 7.3 Include default site_settings record with current meta title and description
     - _Requirements: 3.3_
@@ -197,14 +197,14 @@ Transform the existing static SvelteKit portfolio into a dynamic system with a G
 - [ ] 9. Frontend - API Client and Types
   - [ ] 9.1 Create `app/src/lib/types/portfolio.ts` with TypeScript interfaces matching all API response shapes
     - _Requirements: 7.1_
-  - [ ] 9.2 Create `app/src/lib/types/***REMOVED***.ts` with ***REMOVED***-specific types (login request/response, CRUD payloads, dashboard stats)
+  - [ ] 9.2 Create `app/src/lib/types/admin.ts` with admin-specific types (login request/response, CRUD payloads, dashboard stats)
     - _Requirements: 8.4, 8.5_
   - [ ] 9.3 Create `app/src/lib/api/client.ts` with base fetch wrapper (base URL from env, automatic JSON headers, JWT injection from store)
     - Redirect to login on 401 responses
     - _Requirements: 9.4_
   - [ ] 9.4 Create `app/src/lib/api/public.ts` with functions for all public API calls
     - _Requirements: 7.1_
-  - [ ] 9.5 Create `app/src/lib/api/***REMOVED***.ts` with functions for all ***REMOVED*** API calls (CRUD, publish, reorder, messages, settings)
+  - [ ] 9.5 Create `app/src/lib/api/admin.ts` with functions for all admin API calls (CRUD, publish, reorder, messages, settings)
     - _Requirements: 8.4, 8.5, 8.6_
   - [ ] 9.6 Create `app/src/lib/stores/auth.ts` with JWT token store (localStorage persistence, login/logout helpers, isAuthenticated derived)
     - _Requirements: 9.2, 9.3_
@@ -226,52 +226,52 @@ Transform the existing static SvelteKit portfolio into a dynamic system with a G
     - _Requirements: 7.1, 7.2_
 
 - [ ] 11. Frontend - Admin Panel Layout and Auth
-  - [ ] 11.1 Create `app/src/lib/styles/***REMOVED***.css` with dark console-style theme (dark background, monospace accents, card-based layout)
+  - [ ] 11.1 Create `app/src/lib/styles/admin.css` with dark console-style theme (dark background, monospace accents, card-based layout)
     - _Requirements: 8.2_
-  - [ ] 11.2 Create `app/src/routes/***REMOVED***/+layout.svelte` with sidebar navigation, auth guard (redirect to login if no token), and ***REMOVED*** CSS import
+  - [ ] 11.2 Create `app/src/routes/admin/+layout.svelte` with sidebar navigation, auth guard (redirect to login if no token), and admin CSS import
     - _Requirements: 9.1_
-  - [ ] 11.3 Create `app/src/lib/components/***REMOVED***/Sidebar.svelte` with navigation links to all ***REMOVED*** sections and unread message count badge
+  - [ ] 11.3 Create `app/src/lib/components/admin/Sidebar.svelte` with navigation links to all admin sections and unread message count badge
     - _Requirements: 8.2, 10.4_
-  - [ ] 11.4 Create `app/src/routes/***REMOVED***/login/+page.svelte` with email/password form, login API call, and redirect to dashboard on success
+  - [ ] 11.4 Create `app/src/routes/admin/login/+page.svelte` with email/password form, login API call, and redirect to dashboard on success
     - _Requirements: 9.2_
-  - [ ] 11.5 Create `app/src/routes/***REMOVED***/+page.svelte` that redirects to /***REMOVED***/dashboard
+  - [ ] 11.5 Create `app/src/routes/admin/+page.svelte` that redirects to /admin/dashboard
     - _Requirements: 8.1_
-  - [ ] 11.6 Create `app/src/routes/***REMOVED***/dashboard/+page.svelte` with summary cards showing record counts for each section
+  - [ ] 11.6 Create `app/src/routes/admin/dashboard/+page.svelte` with summary cards showing record counts for each section
     - _Requirements: 8.3_
 
 - [ ] 12. Frontend - Admin CRUD Pages
-  - [ ] 12.1 Create reusable ***REMOVED*** components: DataTable.svelte, FormEditor.svelte, ImageUrlInput.svelte, PublishToggle.svelte, ReorderList.svelte, DashboardCard.svelte
+  - [ ] 12.1 Create reusable admin components: DataTable.svelte, FormEditor.svelte, ImageUrlInput.svelte, PublishToggle.svelte, ReorderList.svelte, DashboardCard.svelte
     - _Requirements: 8.4, 8.5, 8.6, 12.1, 12.2_
-  - [ ] 12.2 Create ***REMOVED*** identity section pages (list, new, edit) with form fields matching the identity_console schema
+  - [ ] 12.2 Create admin identity section pages (list, new, edit) with form fields matching the identity_console schema
     - _Requirements: 8.4, 8.5_
-  - [ ] 12.3 Create ***REMOVED*** capabilities section pages (list, new, edit)
+  - [ ] 12.3 Create admin capabilities section pages (list, new, edit)
     - _Requirements: 8.4, 8.5_
-  - [ ] 12.4 Create ***REMOVED*** strengths section pages (list, new, edit)
+  - [ ] 12.4 Create admin strengths section pages (list, new, edit)
     - _Requirements: 8.4, 8.5_
-  - [ ] 12.5 Create ***REMOVED*** dossier section pages (list, new, edit)
+  - [ ] 12.5 Create admin dossier section pages (list, new, edit)
     - _Requirements: 8.4, 8.5_
-  - [ ] 12.6 Create ***REMOVED*** education section pages (list, new, edit)
+  - [ ] 12.6 Create admin education section pages (list, new, edit)
     - _Requirements: 8.4, 8.5_
-  - [ ] 12.7 Create ***REMOVED*** experiences section pages (list, new, edit) including JSONB array editors for bullet_points, tech_tags, gallery_images
+  - [ ] 12.7 Create admin experiences section pages (list, new, edit) including JSONB array editors for bullet_points, tech_tags, gallery_images
     - _Requirements: 8.4, 8.5_
-  - [ ] 12.8 Create ***REMOVED*** projects section pages (list, new, edit)
+  - [ ] 12.8 Create admin projects section pages (list, new, edit)
     - _Requirements: 8.4, 8.5_
-  - [ ] 12.9 Create ***REMOVED*** certifications section pages (list, new, edit)
+  - [ ] 12.9 Create admin certifications section pages (list, new, edit)
     - _Requirements: 8.4, 8.5_
-  - [ ] 12.10 Create ***REMOVED*** publications section pages (list, new, edit)
+  - [ ] 12.10 Create admin publications section pages (list, new, edit)
     - _Requirements: 8.4, 8.5_
-  - [ ] 12.11 Create ***REMOVED*** messages page with table view, read/unread status, and delete action
+  - [ ] 12.11 Create admin messages page with table view, read/unread status, and delete action
     - _Requirements: 10.1, 10.2, 10.3_
-  - [ ] 12.12 Create ***REMOVED*** settings page with form for all site_settings fields
+  - [ ] 12.12 Create admin settings page with form for all site_settings fields
     - _Requirements: 11.1_
 
-- [ ] 13. Checkpoint - Frontend ***REMOVED*** verification
+- [ ] 13. Checkpoint - Frontend admin verification
   - Ensure all tests pass, ask the user if questions arise.
 
 - [ ] 14. Frontend - Validation and Polish
   - [ ] 14.1 Create `app/src/lib/utils/validation.ts` with form validation helpers (required, email, URL, min/max length)
     - _Requirements: 8.5_
-  - [ ] 14.2 Add client-side validation to all ***REMOVED*** forms with inline error messages
+  - [ ] 14.2 Add client-side validation to all admin forms with inline error messages
     - _Requirements: 8.5_
   - [ ] 14.3 Add image URL preview thumbnails to ImageUrlInput component
     - _Requirements: 12.2_

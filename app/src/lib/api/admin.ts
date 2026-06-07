@@ -6,7 +6,7 @@ import { get } from 'svelte/store';
 import { token, clearToken } from '$lib/stores/auth';
 import { API_BASE_URL } from '$lib/config';
 
-async function ***REMOVED***Fetch<T>(endpoint: string, options: RequestInit = {}): Promise<T> {
+async function adminFetch<T>(endpoint: string, options: RequestInit = {}): Promise<T> {
 	const currentToken = get(token);
 	const headers: Record<string, string> = {
 		'Content-Type': 'application/json',
@@ -25,7 +25,7 @@ async function ***REMOVED***Fetch<T>(endpoint: string, options: RequestInit = {}
 	if (response.status === 401) {
 		clearToken();
 		if (typeof window !== 'undefined') {
-			window.location.href = '/***REMOVED***/login';
+			window.location.href = '/admin/login';
 		}
 		throw new Error('Session expired');
 	}
@@ -59,64 +59,64 @@ export async function login(email: string, password: string) {
 }
 
 export async function getMe() {
-	return ***REMOVED***Fetch<{ id: string; email: string; name: string }>('/api/auth/me');
+	return adminFetch<{ id: string; email: string; name: string }>('/api/auth/me');
 }
 
 // Dashboard
 export async function getDashboardStats() {
-	return ***REMOVED***Fetch<Record<string, number>>('/api/***REMOVED***/dashboard/stats');
+	return adminFetch<Record<string, number>>('/api/admin/dashboard/stats');
 }
 
 // Generic CRUD
 export async function listResource(resource: string) {
-	return ***REMOVED***Fetch<Record<string, unknown>[]>(`/api/***REMOVED***/${resource}`);
+	return adminFetch<Record<string, unknown>[]>(`/api/admin/${resource}`);
 }
 
 export async function getResource(resource: string, id: string) {
-	return ***REMOVED***Fetch<Record<string, unknown>>(`/api/***REMOVED***/${resource}/${id}`);
+	return adminFetch<Record<string, unknown>>(`/api/admin/${resource}/${id}`);
 }
 
 export async function createResource(resource: string, data: Record<string, unknown>) {
-	return ***REMOVED***Fetch<{ id: string; message: string }>(`/api/***REMOVED***/${resource}`, {
+	return adminFetch<{ id: string; message: string }>(`/api/admin/${resource}`, {
 		method: 'POST',
 		body: JSON.stringify(data)
 	});
 }
 
 export async function updateResource(resource: string, id: string, data: Record<string, unknown>) {
-	return ***REMOVED***Fetch<{ message: string }>(`/api/***REMOVED***/${resource}/${id}`, {
+	return adminFetch<{ message: string }>(`/api/admin/${resource}/${id}`, {
 		method: 'PUT',
 		body: JSON.stringify(data)
 	});
 }
 
 export async function deleteResource(resource: string, id: string) {
-	return ***REMOVED***Fetch<{ message: string }>(`/api/***REMOVED***/${resource}/${id}`, {
+	return adminFetch<{ message: string }>(`/api/admin/${resource}/${id}`, {
 		method: 'DELETE'
 	});
 }
 
 export async function publishResource(resource: string, id: string) {
-	return ***REMOVED***Fetch<{ message: string }>(`/api/***REMOVED***/${resource}/${id}/publish`, {
+	return adminFetch<{ message: string }>(`/api/admin/${resource}/${id}/publish`, {
 		method: 'PATCH'
 	});
 }
 
 export async function unpublishResource(resource: string, id: string) {
-	return ***REMOVED***Fetch<{ message: string }>(`/api/***REMOVED***/${resource}/${id}/unpublish`, {
+	return adminFetch<{ message: string }>(`/api/admin/${resource}/${id}/unpublish`, {
 		method: 'PATCH'
 	});
 }
 
 export async function reorderResource(resource: string, ids: string[]) {
-	return ***REMOVED***Fetch<{ message: string }>(`/api/***REMOVED***/${resource}/reorder`, {
+	return adminFetch<{ message: string }>(`/api/admin/${resource}/reorder`, {
 		method: 'PUT',
 		body: JSON.stringify({ ids })
 	});
 }
 
 export async function markMessageRead(id: string) {
-	return ***REMOVED***Fetch<{ message: string }>(`/api/***REMOVED***/messages/${id}/read`, {
+	return adminFetch<{ message: string }>(`/api/admin/messages/${id}/read`, {
 		method: 'PATCH'
 	});
 }

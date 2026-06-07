@@ -1,8 +1,8 @@
 <script lang="ts">
-	import FormEditor from '$lib/components/***REMOVED***/FormEditor.svelte';
+	import FormEditor from '$lib/components/admin/FormEditor.svelte';
 </script>
 
-<FormEditor resource="identity" title="Identity" backHref="/***REMOVED***/identity" fields={[
+<FormEditor resource="identity" title="Identity" backHref="/admin/identity" fields={[
 	{ key: 'name', label: 'Name', required: true },
 	{ key: 'role', label: 'Role', required: true },
 	{ key: 'headline', label: 'Headline', type: 'textarea', required: true },

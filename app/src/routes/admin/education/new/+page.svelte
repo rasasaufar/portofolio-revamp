@@ -1,8 +1,8 @@
 <script lang="ts">
-	import FormEditor from '$lib/components/***REMOVED***/FormEditor.svelte';
+	import FormEditor from '$lib/components/admin/FormEditor.svelte';
 </script>
 
-<FormEditor resource="education" title="Education" backHref="/***REMOVED***/education" fields={[
+<FormEditor resource="education" title="Education" backHref="/admin/education" fields={[
 	{ key: 'institution_name', label: 'Institution Name', required: true },
 	{ key: 'degree', label: 'Degree', required: true },
 	{ key: 'major', label: 'Major' },

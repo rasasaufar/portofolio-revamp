@@ -89,12 +89,12 @@
 	<div class="tag-input-row">
 		<input
 			type="text"
-			class="***REMOVED***-input tag-input"
+			class="admin-input tag-input"
 			bind:value={newItem}
 			onkeydown={handleKeydown}
 			{placeholder}
 		/>
-		<button type="button" class="***REMOVED***-btn ***REMOVED***-btn-sm ***REMOVED***-btn-primary" onclick={addItem}>+ Add</button>
+		<button type="button" class="admin-btn admin-btn-sm admin-btn-primary" onclick={addItem}>+ Add</button>
 	</div>
 </div>
 
@@ -116,22 +116,22 @@
 		display: flex;
 		align-items: center;
 		gap: 0.5rem;
-		background: var(--***REMOVED***-soft);
-		border: 3px solid var(--***REMOVED***-ink);
-		box-shadow: 2px 2px 0 0 var(--***REMOVED***-ink);
+		background: var(--admin-soft);
+		border: 3px solid var(--admin-ink);
+		box-shadow: 2px 2px 0 0 var(--admin-ink);
 		padding: 0.45rem 0.7rem;
 		transition: transform 0.1s ease;
 	}
 
 	.tag-item:hover {
 		transform: translate(-1px, -1px);
-		box-shadow: 3px 3px 0 0 var(--***REMOVED***-ink);
+		box-shadow: 3px 3px 0 0 var(--admin-ink);
 	}
 
 	.tag-index {
 		font-family: var(--font-mono);
 		font-size: 0.62rem;
-		color: var(--***REMOVED***-ink-muted);
+		color: var(--admin-ink-muted);
 		min-width: 1.5rem;
 	}
 
@@ -148,9 +148,9 @@
 	}
 
 	.tag-btn {
-		background: var(--***REMOVED***-white);
-		border: 2px solid var(--***REMOVED***-ink);
-		color: var(--***REMOVED***-ink);
+		background: var(--admin-white);
+		border: 2px solid var(--admin-ink);
+		color: var(--admin-ink);
 		width: 24px;
 		height: 24px;
 		cursor: pointer;
@@ -159,13 +159,13 @@
 		align-items: center;
 		justify-content: center;
 		transition: all 0.1s ease;
-		box-shadow: 1px 1px 0 0 var(--***REMOVED***-ink);
+		box-shadow: 1px 1px 0 0 var(--admin-ink);
 	}
 
 	.tag-btn:hover:not(:disabled) {
-		background: var(--***REMOVED***-yellow);
+		background: var(--admin-yellow);
 		transform: translate(-1px, -1px);
-		box-shadow: 2px 2px 0 0 var(--***REMOVED***-ink);
+		box-shadow: 2px 2px 0 0 var(--admin-ink);
 	}
 
 	.tag-btn:disabled {
@@ -174,7 +174,7 @@
 	}
 
 	.tag-btn-remove:hover:not(:disabled) {
-		background: var(--***REMOVED***-pink);
+		background: var(--admin-pink);
 	}
 
 	.tag-input-row {
