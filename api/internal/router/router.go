@@ -61,6 +61,7 @@ func New(db *pgxpool.Pool, authService *service.AuthService, corsOrigin string) 
 		r.Group(func(r chi.Router) {
 			r.Use(middleware.JWTAuth(authService))
 			r.Get("/auth/me", authHandler.Me)
+			r.Put("/auth/profile", authHandler.UpdateProfile)
 			r.Put("/auth/password", authHandler.ChangePassword)
 		})
 

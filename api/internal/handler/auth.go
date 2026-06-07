@@ -3,6 +3,8 @@ package handler
 import (
 	"encoding/json"
 	"net/http"
+	"net/mail"
+	"strings"
 	"time"
 
 	"github.com/portfolio/api/internal/middleware"
@@ -44,6 +46,12 @@ type userResponse struct {
 type changePasswordRequest struct {
 	CurrentPassword string `json:"current_password"`
 	NewPassword     string `json:"new_password"`
+}
+
+type updateProfileRequest struct {
+	Name            string `json:"name"`
+	Email           string `json:"email"`
+	CurrentPassword string `json:"current_password"`
 }
 
 // --- Handlers ---
@@ -129,6 +137,81 @@ func (h *AuthHandler) Me(w http.ResponseWriter, r *http.Request) {
 	})
 }
 
+// UpdateProfile handles PUT /api/auth/profile
+// Requires current password verification before updating account credentials.
+func (h *AuthHandler) UpdateProfile(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+
+	userID := middleware.GetUserID(r.Context())
+	if userID == "" {
+		w.WriteHeader(http.StatusUnauthorized)
+		json.NewEncoder(w).Encode(map[string]string{"error": "Unauthorized"})
+		return
+	}
+
+	var req updateProfileRequest
+	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		json.NewEncoder(w).Encode(map[string]string{"error": "Invalid request body"})
+		return
+	}
+
+	req.Name = strings.TrimSpace(req.Name)
+	req.Email = strings.TrimSpace(strings.ToLower(req.Email))
+
+	if req.Name == "" || req.Email == "" || req.CurrentPassword == "" {
+		w.WriteHeader(http.StatusBadRequest)
+		json.NewEncoder(w).Encode(map[string]string{"error": "Username, email, and current password are required"})
+		return
+	}
+
+	if len(req.Name) > 100 {
+		w.WriteHeader(http.StatusBadRequest)
+		json.NewEncoder(w).Encode(map[string]string{"error": "Username must be 100 characters or less"})
+		return
+	}
+
+	if _, err := mail.ParseAddress(req.Email); err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		json.NewEncoder(w).Encode(map[string]string{"error": "Email format is invalid"})
+		return
+	}
+
+	user, err := h.userRepo.FindByID(r.Context(), userID)
+	if err != nil {
+		w.WriteHeader(http.StatusNotFound)
+		json.NewEncoder(w).Encode(map[string]string{"error": "User not found"})
+		return
+	}
+
+	if err := h.authService.ComparePassword(user.PasswordHash, req.CurrentPassword); err != nil {
+		w.WriteHeader(http.StatusForbidden)
+		json.NewEncoder(w).Encode(map[string]string{"error": "Current password is incorrect"})
+		return
+	}
+
+	if err := h.userRepo.UpdateProfile(r.Context(), userID, req.Name, req.Email); err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		json.NewEncoder(w).Encode(map[string]string{"error": "Failed to update profile"})
+		return
+	}
+
+	updatedUser, err := h.userRepo.FindByID(r.Context(), userID)
+	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		json.NewEncoder(w).Encode(map[string]string{"error": "Profile updated, but failed to reload user"})
+		return
+	}
+
+	w.WriteHeader(http.StatusOK)
+	json.NewEncoder(w).Encode(userResponse{
+		ID:        updatedUser.ID,
+		Email:     updatedUser.Email,
+		Name:      updatedUser.Name,
+		CreatedAt: updatedUser.CreatedAt.Format(time.RFC3339),
+	})
+}
+
 // ChangePassword handles PUT /api/auth/password
 // Requires current password verification before updating.
 func (h *AuthHandler) ChangePassword(w http.ResponseWriter, r *http.Request) {
@@ -170,7 +253,7 @@ func (h *AuthHandler) ChangePassword(w http.ResponseWriter, r *http.Request) {
 
 	// Verify current password
 	if err := h.authService.ComparePassword(user.PasswordHash, req.CurrentPassword); err != nil {
-		w.WriteHeader(http.StatusUnauthorized)
+		w.WriteHeader(http.StatusForbidden)
 		json.NewEncoder(w).Encode(map[string]string{"error": "Current password is incorrect"})
 		return
 	}

@@ -62,6 +62,20 @@ export async function getMe() {
 	return adminFetch<{ id: string; email: string; name: string }>('/api/auth/me');
 }
 
+export async function updateProfile(data: { name: string; email: string; current_password: string }) {
+	return adminFetch<{ id: string; email: string; name: string }>('/api/auth/profile', {
+		method: 'PUT',
+		body: JSON.stringify(data)
+	});
+}
+
+export async function changePassword(data: { current_password: string; new_password: string }) {
+	return adminFetch<{ message: string }>('/api/auth/password', {
+		method: 'PUT',
+		body: JSON.stringify(data)
+	});
+}
+
 // Dashboard
 export async function getDashboardStats() {
 	return adminFetch<Record<string, number>>('/api/admin/dashboard/stats');
