@@ -25,7 +25,7 @@ func Load() *Config {
 		JWTSecret:            requireEnv("JWT_SECRET"),
 		JWTExpiry:            parseDuration(getEnv("JWT_EXPIRY", "24h")),
 		CORSOrigin:           getEnv("CORS_ORIGIN", "http://localhost:5173"),
-		AdminDefaultPassword: getEnv("ADMIN_DEFAULT_PASSWORD", "***REMOVED***123"),
+		AdminDefaultPassword: getEnv("ADMIN_DEFAULT_PASSWORD", ""),
 	}
 	return cfg
 }
