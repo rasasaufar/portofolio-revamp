@@ -166,7 +166,11 @@ Full API documentation is available in `docs/API.md`.
 
 ## 🖼️ Screenshots
 
+Public
 <img width="3644" height="2370" alt="image" src="https://github.com/user-attachments/assets/61685a79-dedc-40e3-818b-c8e64f547032" />
+
+Admin
+<img width="3644" height="2370" alt="image" src="https://github.com/user-attachments/assets/ce817f26-a645-4e9b-946a-e581b42bcde5" />
 
 
 | Page | Preview |
