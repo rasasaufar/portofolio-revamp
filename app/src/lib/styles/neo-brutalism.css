@@ -559,18 +559,25 @@ main {
 }
 
 .gallery-item {
+  position: relative;
   border: var(--border-thick);
   box-shadow: var(--shadow-hard-sm);
   background: #fff;
-  min-height: 120px;
+  height: 180px;
+  max-height: 180px;
   overflow: hidden;
   cursor: pointer;
+  padding: 0;
+  display: block;
 }
 
 .gallery-item img {
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
+  display: block;
 }
 
 .overlay {
@@ -582,6 +589,7 @@ main {
   justify-content: center;
   z-index: 120;
   padding: 1rem;
+  overflow: auto;
 }
 
 .overlay-backdrop {
@@ -597,18 +605,23 @@ main {
   position: relative;
   z-index: 1;
   width: min(920px, 100%);
+  max-height: calc(100vh - 2rem);
   border: var(--border-thick);
   box-shadow: 10px 10px 0 0 #000;
   background: #fff;
   display: grid;
+  grid-template-rows: 1fr auto auto;
   gap: 1rem;
   padding: 1rem;
+  overflow: hidden;
 }
 
 .overlay-media {
   border: var(--border-thick);
-  min-height: 320px;
+  min-height: 200px;
+  max-height: 60vh;
   background: var(--bg-blue);
+  overflow: hidden;
 }
 
 .overlay-media img {
