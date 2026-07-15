@@ -105,11 +105,19 @@
 </script>
 
 <svelte:head>
-	{#if !isAdmin}
-		<title>{siteTitle}</title>
-		<meta name="description" content={siteDescription} />
-		<link rel="icon" href="/favicon.png" />
-	{/if}
+ {#if !isAdmin}
+  <title>{siteTitle}</title>
+  <meta name="description" content={siteDescription} />
+  <meta name="keywords" content="rasas aufar, IT implementation, portfolio, infrastructure, government technology" />
+  <link rel="canonical" href="https://rasasaufar.site" />
+  <meta property="og:title" content={siteTitle} />
+  <meta property="og:description" content={siteDescription} />
+  <meta property="og:image" content="https://rasasaufar.site/images/profile.png" />
+  <meta property="og:url" content="https://rasasaufar.site" />
+  <meta property="og:type" content="website" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="icon" href="/favicon.png" />
+ {/if}
 </svelte:head>
 
 {#if isAdmin}
