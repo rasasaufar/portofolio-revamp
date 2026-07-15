@@ -105,33 +105,33 @@
 </script>
 
 <svelte:head>
- {#if !isAdmin}
-  <title>{siteTitle}</title>
-  <meta name="description" content={siteDescription} />
-  <meta name="keywords" content="rasas aufar, IT implementation, portfolio, infrastructure, government technology" />
-  <link rel="canonical" href="https://rasasaufar.site" />
-  <meta property="og:title" content={siteTitle} />
-  <meta property="og:description" content={siteDescription} />
-  <meta property="og:image" content="https://rasasaufar.site/images/profile.png" />
-  <meta property="og:url" content="https://rasasaufar.site" />
-  <meta property="og:type" content="website" />
-  <meta name="twitter:card" content="summary_large_image" />
-  <link rel="icon" href="/favicon.png" />
-  {@html `<script type="application/ld+json">${JSON.stringify({
-   "@context": "https://schema.org",
-   "@type": "Person",
-   "name": "Rasas Aufar",
-   "url": "https://rasasaufar.site",
-   "jobTitle": "IT Implementation Professional",
-   "description": "IT Implementation Professional experienced in government technology delivery, infrastructure operations, and applied data analysis.",
-   "image": "https://rasasaufar.site/images/profile.png",
-   "sameAs": [
-    "https://github.com/rasasaufar",
-    "https://www.linkedin.com/in/rasasaufar/",
-    "https://instagram.com/rasasaufar"
-   ]
-  })}</script>`}
- {/if}
+	{#if !isAdmin}
+		<title>{siteTitle}</title>
+		<meta name="description" content={siteDescription} />
+		<meta name="keywords" content="rasas aufar, IT implementation, portfolio, infrastructure, government technology" />
+		<link rel="canonical" href="https://rasasaufar.site" />
+		<meta property="og:title" content={siteTitle} />
+		<meta property="og:description" content={siteDescription} />
+		<meta property="og:image" content="https://rasasaufar.site/images/profile.png" />
+		<meta property="og:url" content="https://rasasaufar.site" />
+		<meta property="og:type" content="website" />
+		<meta name="twitter:card" content="summary_large_image" />
+		<link rel="icon" href="/favicon.png" />
+	{@html `<script type="application/ld+json">${JSON.stringify({
+		"@context": "https://schema.org",
+		"@type": "Person",
+		"name": "Rasas Aufar",
+		"url": "https://rasasaufar.site",
+		"jobTitle": "IT Implementation Professional",
+		"description": "IT Implementation Professional experienced in government technology delivery, infrastructure operations, and applied data analysis.",
+		"image": "https://rasasaufar.site/images/profile.png",
+		"sameAs": [
+			"https://github.com/rasasaufar",
+			"https://www.linkedin.com/in/rasasaufar/",
+			"https://instagram.com/rasasaufar"			
+   			]	
+  		})}</script>`}
+ 	{/if}
 </svelte:head>
 
 {#if isAdmin}
