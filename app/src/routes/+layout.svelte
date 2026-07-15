@@ -117,6 +117,20 @@
   <meta property="og:type" content="website" />
   <meta name="twitter:card" content="summary_large_image" />
   <link rel="icon" href="/favicon.png" />
+  {@html `<script type="application/ld+json">${JSON.stringify({
+   "@context": "https://schema.org",
+   "@type": "Person",
+   "name": "Rasas Aufar",
+   "url": "https://rasasaufar.site",
+   "jobTitle": "IT Implementation Professional",
+   "description": "IT Implementation Professional experienced in government technology delivery, infrastructure operations, and applied data analysis.",
+   "image": "https://rasasaufar.site/images/profile.png",
+   "sameAs": [
+    "https://github.com/rasasaufar",
+    "https://www.linkedin.com/in/rasasaufar/",
+    "https://instagram.com/rasasaufar"
+   ]
+  })}</script>`}
  {/if}
 </svelte:head>
 
